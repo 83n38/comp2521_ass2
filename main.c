@@ -12,7 +12,7 @@
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    printf("Hello, World!\n");
+    printf("Starting in main!\n");
     
     List L = getCollection();
     Graph g = getGraph(L);
