@@ -9,13 +9,15 @@ typedef struct Node *List;
 
 typedef struct Node {
     char*        url;
-    float        rank;
+    float        rank; //may not be used
+    float        Win;  //may not be used
+    float        Wout; //may not be used
     struct Node *next;
 } Node;
 
-List insertLL(List, char *url, float rank);
+List insertLL(List, char *url);
 List deleteLL(List, char *url);
-bool inLL(List, char *url);
+List inLL(List, char *url);
 void freeLL(List);
 void showLL(List);
 int lengthLL(List);

@@ -7,21 +7,20 @@
 
 
 
-Node *makeNode(char *url, float rank) {
+Node *makeNode(char *url) {
     Node *new = malloc(sizeof(Node));
     assert(new != NULL);
     new->url = strdup(url);
-    new->rank = rank;
     new->next = NULL;
     return new;
 }
 
-List insertLL(List L, char *url, float rank) {
+List insertLL(List L, char *url) {
     if (inLL(L, url))
         return L;
     
     // add new node at the beginning
-    Node *new = makeNode(url, rank);
+    Node *new = makeNode(url);
     new->next = L;
     return new;
 }
@@ -41,11 +40,11 @@ List deleteLL(List L, char *url) {
     
 }
 
-bool inLL(List L, char *url) {
+List inLL(List L, char *url) {
     if (L == NULL)
-        return false;
+        return NULL;
     if (strcmp(L->url, url) == 0)
-        return true;
+        return L;
     
     return inLL(L->next, url);
 }

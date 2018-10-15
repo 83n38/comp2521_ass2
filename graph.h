@@ -12,11 +12,16 @@ typedef struct GraphRep *Graph;
 typedef int Vertex;
 
 typedef struct GraphRep {
-    char **urls;  // array of urls (strings)
-    float *ranks; // arrat of floats
-    List *edges;  // array of lists
-    int   nV;     // #vertices
-    int   nE;     // #edges
+    char **urls;        // array of urls (strings)
+    float *ranks;       // array of floats
+    float *newRanks;    // ""
+    float *nInLinks;    // ""
+    float *nOutLinks;   // ""
+    float *sumNeighboursInLinks;
+    float *sumNeighboursOutLinks;
+    List *edges;        // array of lists
+    int   nV;           // #vertices
+    int   nE;           // #edges
 } GraphRep;
 
 
@@ -26,6 +31,9 @@ void  insertEdge(Graph, char *src, char *dest);
 //bool  adjacent(Graph, Vertex, Vertex);
 void  showGraph(Graph);
 void  freeGraph(Graph);
+void calculateWeights(Graph g);
+void sumNeighborLinks(Graph g);
+void adjustNLinks(Graph g);
 
 
 #endif

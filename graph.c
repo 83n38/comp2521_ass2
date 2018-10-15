@@ -11,6 +11,8 @@
 #define strEQ(g,t) (strcmp((g),(t)) == 0)
 
 static int vertexID(char *, char **, int);
+static int sumNeighborInLinks(Graph g, List Edges);
+static int sumNeighborOutLinks(Graph g, List Edges);
 
 
 Graph newGraph(List L) {
@@ -29,13 +31,29 @@ Graph newGraph(List L) {
     // allocate memory for array of lists
     g->edges = malloc(nV * sizeof(List));
     assert(g->edges != NULL);
-    // allocate memory for page ranks
+    // allocate memory for page ranks/newRanks
     g->ranks = malloc(nV * sizeof(float));
     assert(g->ranks != NULL);
+    g->newRanks = malloc(nV * sizeof(float));
+    assert(g->ranks != NULL);
+    // allocate memory for Nin/outLinks
+    g->nInLinks = malloc(nV * sizeof(float));
+    assert(g->nInLinks != NULL);
+    g->nOutLinks = malloc(nV * sizeof(float));
+    assert(g->nInLinks != NULL);
+    //allocate memory for sumNeighboursIn/OutLinks
+    g->sumNeighboursInLinks = malloc(nV * sizeof(float));
+    assert(g->sumNeighboursInLinks != NULL);
+    g->sumNeighboursOutLinks = malloc(nV * sizeof(float));
+    assert(g->sumNeighboursOutLinks != NULL);
+
     List curr = L;
     for (i = 0; i < nV; i++) {
         g->urls[i] = strdup(curr->url);
         g->edges[i] = NULL;
+        g->ranks[i] = 0;
+        g->nInLinks[i] = g->nOutLinks[i] = 0;
+        g->sumNeighboursInLinks[i] = g->sumNeighboursOutLinks[i] = 0;
         curr = curr->next;
     }
     return g;
@@ -54,7 +72,9 @@ void insertEdge(Graph g, char *src, char *dest) {
     assert(g != NULL && validV(g,v) && validV(g,w));
     
     if (!inLL(g->edges[v], dest)) {   // edge e not in graph
-        g->edges[v] = insertLL(g->edges[v], dest, 0);
+        g->edges[v] = insertLL(g->edges[v], dest);
+        g->nInLinks[w]++;
+        g->nOutLinks[v]++;
         g->nE++;
     }
 }
@@ -86,6 +106,7 @@ void showGraph(Graph g) {
     printf("Number of vertices: %d\n", g->nV);
     printf("Number of edges: %d\n", g->nE);
     for (i = 0; i < g->nV; i++) {
+        printf("nIn: %.1f, nOut: %.1f ", g->sumNeighboursInLinks[i], g->sumNeighboursOutLinks[i]);
         printf("%d - ", i);
         showLL(g->edges[i]);
     }
@@ -116,3 +137,70 @@ void freeGraph(Graph g) {
     free(g);
 }
 
+
+/* Changes number of incoming/outcoming Links to 0.5
+   if zero in order to avoid division by zero errors */
+void adjustNLinks(Graph g) {
+    for(int v = 0; v < g->nV; v++) {
+        if(g->nInLinks[v] == 0) { g->nInLinks[v] = 0.5; }
+        if(g->nOutLinks[v] == 0) { g->nOutLinks[v] = 0.5; }
+    }
+}
+
+/* Calculates the sum of the incoming/outgoing links of the neighbors
+ of a vertex */
+
+void sumNeighborLinks(Graph g) {
+    
+    for(int v = 0; v < g->nV; v++) {
+        for (List curr = g->edges[v]; curr != NULL; curr = curr->next) {
+            int w = vertexID(curr->url, g->urls, g->nV);
+            g->sumNeighboursOutLinks[v] += g->nOutLinks[w];
+            g->sumNeighboursInLinks[v] += g->nInLinks[w];
+        }
+    }
+}
+
+
+
+/* Below are functions I don't need anymore but am keeping
+   just in case
+
+void calculateWeights(Graph g) {
+    
+    adjustNLinks(g); //prevents division by zero errors
+    
+    for (int v = 0; v < g->nV; v++) {
+        int sumIn = sumNeighborInLinks(g, g->edges[v]);
+        int sumOut = sumNeighborOutLinks(g, g->edges[v]);
+        List currEdge = g->edges[v];
+        while (currEdge != NULL) {
+            
+            int w = vertexID(currEdge->url, g->urls, g->nV);
+            currEdge->Win = g->nInLinks[w]/sumIn;
+            currEdge->Wout = g->nOutLinks[w]/sumOut;
+            
+            currEdge = currEdge->next;
+        }
+    }
+}
+
+static int sumNeighborInLinks(Graph g, List Edges) {
+    int sum = 0;
+    for (List curr = Edges; curr != NULL; curr = curr->next) {
+        int w = vertexID(curr->url, g->urls, g->nV);
+        sum += g->nInLinks[w];
+    }
+    return sum;
+}
+
+static int sumNeighborOutLinks(Graph g, List Edges) {
+    int sum = 0;
+    for (List curr = Edges; curr != NULL; curr = curr->next) {
+        int w = vertexID(curr->url, g->urls, g->nV);
+        sum += g->nOutLinks[w];
+    }
+    return sum;
+}
+
+ */

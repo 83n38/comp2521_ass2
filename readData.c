@@ -19,7 +19,7 @@ List getCollection(void) {
     List L = NULL;
     char url[10] = "\0";
     while(fscanf(fp, "%s", url) == 1) {
-        L = insertLL(L, url, 0); //'0' because no rank yet
+        L = insertLL(L, url); //'0' because no rank yet
     }
     fclose(fp);
     return L;
@@ -61,7 +61,9 @@ Graph getGraph(List L) {
         fclose(fp);
     }
     
-    
+    adjustNLinks(G); //prevents division by zero errors
+    sumNeighborLinks(G); /* Calculates the sum of the incoming/outgoing
+                          links of the neighbors of a all vertexs */
     
     return G;
 }
@@ -104,7 +106,7 @@ IList getInvertedList(List L) {
                         wordNode = IListSearch(IL, word);
                     }
                     if (!inLL(wordNode->urlList, src)) {
-                        wordNode->urlList = insertLL(wordNode->urlList, src, 0);
+                        wordNode->urlList = insertLL(wordNode->urlList, src);
                     }
                 }
                 free(src); free(url); read = 0;
