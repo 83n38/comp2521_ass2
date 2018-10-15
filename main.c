@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "readData.h"
 
+/*
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -16,8 +17,10 @@ int main(int argc, const char * argv[]) {
     
     List L = getCollection();
     Graph g = getGraph(L);
+    //IList IL = getInvertedList(L);
     
     showGraph(g);
     
     return 0;
 }
+*/

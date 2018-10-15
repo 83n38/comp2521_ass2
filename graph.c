@@ -1,10 +1,6 @@
 // Graph ADT
 // Adjacency List Representation ... COMP2521
 
-#ifndef graph_h
-#define graph_h
-
-
 #include "graph.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -33,6 +29,9 @@ Graph newGraph(List L) {
     // allocate memory for array of lists
     g->edges = malloc(nV * sizeof(List));
     assert(g->edges != NULL);
+    // allocate memory for page ranks
+    g->ranks = malloc(nV * sizeof(float));
+    assert(g->ranks != NULL);
     List curr = L;
     for (i = 0; i < nV; i++) {
         g->urls[i] = strdup(curr->url);
@@ -55,7 +54,7 @@ void insertEdge(Graph g, char *src, char *dest) {
     assert(g != NULL && validV(g,v) && validV(g,w));
     
     if (!inLL(g->edges[v], dest)) {   // edge e not in graph
-        g->edges[v] = insertLL(g->edges[v], dest);
+        g->edges[v] = insertLL(g->edges[v], dest, 0);
         g->nE++;
     }
 }
@@ -117,5 +116,3 @@ void freeGraph(Graph g) {
     free(g);
 }
 
-
-#endif

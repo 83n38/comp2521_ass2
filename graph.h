@@ -1,4 +1,8 @@
 // Graph ADT interface ... COMP2521
+
+#ifndef graph_h
+#define graph_h
+
 #include <stdbool.h>
 #include "list.h"
 
@@ -9,6 +13,7 @@ typedef int Vertex;
 
 typedef struct GraphRep {
     char **urls;  // array of urls (strings)
+    float *ranks; // arrat of floats
     List *edges;  // array of lists
     int   nV;     // #vertices
     int   nE;     // #edges
@@ -21,3 +26,7 @@ void  insertEdge(Graph, char *src, char *dest);
 //bool  adjacent(Graph, Vertex, Vertex);
 void  showGraph(Graph);
 void  freeGraph(Graph);
+
+
+#endif
+

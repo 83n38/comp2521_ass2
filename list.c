@@ -7,20 +7,21 @@
 
 
 
-Node *makeNode(char *url) {
+Node *makeNode(char *url, float rank) {
     Node *new = malloc(sizeof(Node));
     assert(new != NULL);
     new->url = strdup(url);
+    new->rank = rank;
     new->next = NULL;
     return new;
 }
 
-List insertLL(List L, char *url) {
+List insertLL(List L, char *url, float rank) {
     if (inLL(L, url))
         return L;
     
     // add new node at the beginning
-    Node *new = makeNode(url);
+    Node *new = makeNode(url, rank);
     new->next = L;
     return new;
 }

@@ -8,11 +8,12 @@
 typedef struct Node *List;
 
 typedef struct Node {
-    char*         url;
+    char*        url;
+    float        rank;
     struct Node *next;
 } Node;
 
-List insertLL(List, char *url);
+List insertLL(List, char *url, float rank);
 List deleteLL(List, char *url);
 bool inLL(List, char *url);
 void freeLL(List);
