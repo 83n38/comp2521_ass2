@@ -11,8 +11,6 @@
 #define strEQ(g,t) (strcmp((g),(t)) == 0)
 
 static int vertexID(char *, char **, int);
-static int sumNeighborInLinks(Graph g, List Edges);
-static int sumNeighborOutLinks(Graph g, List Edges);
 
 
 Graph newGraph(List L) {
@@ -138,11 +136,10 @@ void freeGraph(Graph g) {
 }
 
 
-/* Changes number of incoming/outcoming Links to 0.5
+/* Changes number of outgoing Links to 0.5
    if zero in order to avoid division by zero errors */
 void adjustNLinks(Graph g) {
     for(int v = 0; v < g->nV; v++) {
-        if(g->nInLinks[v] == 0) { g->nInLinks[v] = 0.5; }
         if(g->nOutLinks[v] == 0) { g->nOutLinks[v] = 0.5; }
     }
 }
