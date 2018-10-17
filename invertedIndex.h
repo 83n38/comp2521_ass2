@@ -4,16 +4,23 @@
 #define invertedIndex_h
 
 #include <stdbool.h>
+#include "list.h"
 
 typedef char* Word;      // Word is just a key
 
 typedef struct BSTNode *IList;
 
+typedef struct BSTNode {
+    char *word;
+    List urlList;
+    IList left, right;
+} BSTNode;
+
 IList newIList(void);        // create an empty IList
 void freeIList(IList);   // free memory associated with IList
 void showIList(IList);   // display a IList (sideways)
 
-bool IListSearch(IList, Word);   // check whether a Word is in a IList
+IList IListSearch(IList, Word);   // check whether a Word is in a IList
 int  IListHeight(IList);         // compute height of IList
 int  IListNumNodes(IList);       // count #nodes in IList
 IList IListInsert(IList, Word);   // insert a new Word into a IList

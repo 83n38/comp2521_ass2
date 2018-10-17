@@ -14,17 +14,13 @@
 #define left(IList)  ((IList)->left)
 #define right(IList)  ((IList)->right)
 
-typedef struct BSTNode {
-    char *word;
-    List urlList;
-    IList left, right;
-} BSTNode;
 
 // make a new node containing word
 IList newNode(Word word) {
     IList new = malloc(sizeof(Node));
     assert(new != NULL);
     word(new) = strdup(word);
+    new->urlList = NULL;
     left(new) = right(new) = NULL;
     return new;
 }
@@ -114,15 +110,17 @@ int IListNumNodes(IList t) {
 }
 
 // check whether a key is in a IList
-bool IListSearch(IList t, Word word) {
+// return NULL if false
+// return Node if True
+IList IListSearch(IList t, Word word) {
     if (t == NULL)
-        return false;
+        return NULL;
     else if (strcmp(word, word(t)) < 0)
         return IListSearch(left(t), word);
     else if (strcmp(word, word(t)) > 0)
         return IListSearch(right(t), word);
     else                                 // word == word(t)
-        return true;
+        return t;
 }
 
 // insert a new item into a IList

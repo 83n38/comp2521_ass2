@@ -40,11 +40,11 @@ List deleteLL(List L, char *url) {
     
 }
 
-bool inLL(List L, char *url) {
+List inLL(List L, char *url) {
     if (L == NULL)
-        return false;
+        return NULL;
     if (strcmp(L->url, url) == 0)
-        return true;
+        return L;
     
     return inLL(L->next, url);
 }
