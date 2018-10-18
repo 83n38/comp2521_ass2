@@ -10,5 +10,4 @@
 #define searchPagerank_h
 
 #include <stdio.h>
-
 #endif /* searchPagerank_h */

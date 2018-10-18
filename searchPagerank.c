@@ -8,10 +8,8 @@
 
 #include "searchPagerank.h"
 #include "readData.h"
-
+/*
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    printf("Starting in main!\n");
     
     List L = getCollection();
     Graph g = getGraph(L);
@@ -20,3 +18,4 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
+*/
