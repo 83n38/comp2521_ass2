@@ -41,39 +41,39 @@ void freeIList(IList t) {
 }
 
 //Don't really need to show IList
-/*
+
 // display IList horizontally
 // code by Jin Qu
-void showIListR(IList t, int index, int **record, int *largest) {
+/*
+void showIListR(IList t, int index, char **record, char *largest) {
     // record largest element along the way
     if (t != NULL) {
-        record[index] = &data(t);
-        if (data(t) > *largest)
-            *largest = data(t);
+        record[index] = word(t);
+        if (strcmp(word(t), largest) > 0) {
+            strcpy(largest, word(t));
+        }
         showIListR(left(t), 2 * index + 1, record, largest);
         showIListR(right(t), 2 * index + 2, record, largest);
     }
 }
 
 void showIList(IList t) {
-    int i, h = IListHeight(t), largest = 0;
+    int i, h = IListHeight(t);
+    char largest[100] = "a";
     
     //use an array of pointers to distinguish NULL node and node with value 0
-    int **record = calloc(pow(2, h + 1) - 1, sizeof(int*));
+    char **record = calloc(pow(2, h + 1) - 1, sizeof(char*));
     assert(record != NULL);
-    showIListR(t, 0, record, &largest);
+    showIListR(t, 0, record, largest);
     int size, lv = 0;
-    if (largest)
-        size = floor(log10(largest)) + 1;
-    else
-        size = 1;
+    size = 1;
     for (i = 0; i < pow(2, h + 1) - 1; i++) {
         int space = size * ((int)(pow(2, h - lv + 1) - 1) / 2);
         printf("%*s", space, "");
         
         // centralize nodes
         if (record[i]) {
-            printf("%*d", size, *record[i]);
+            printf("%*c", size, *record[i]);
         } else {
             printf("%*s", size, "");
         }

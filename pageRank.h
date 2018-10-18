@@ -20,10 +20,9 @@
 
 
 
-void calculatePageRanks(Graph g, float d, float diffPR, int maxIterations);
-List getPageRankList(Graph g, float d, float diffPR, int maxIterations);
-float calculateDiff(Graph g);
-void calculatePageRanks(Graph g, float d, float diffPR, int maxIterations);
+void calculatePageRanks(Graph g, double d);
+List getPageRankList(Graph g, double d, double diffPR, int maxIterations);
+double calculateDiff(Graph g);
 void savePageRanks(Graph g);
 
 #endif /* pageRank_h */

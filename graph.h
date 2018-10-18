@@ -13,12 +13,12 @@ typedef int Vertex;
 
 typedef struct GraphRep {
     char **urls;        // array of urls (strings)
-    float *ranks;       // array of floats
-    float *newRanks;    // ""
-    float *nInLinks;    // ""
-    float *nOutLinks;   // ""
-    float *sumNeighboursInLinks;
-    float *sumNeighboursOutLinks;
+    double *ranks;       // array of doubles
+    double *newRanks;    // ""
+    double *nInLinks;    // ""
+    double *nOutLinks;   // ""
+    double *sumNeighboursInLinks;
+    double *sumNeighboursOutLinks;
     List *edges;        // array of lists
     int   nV;           // #vertices
     int   nE;           // #edges
