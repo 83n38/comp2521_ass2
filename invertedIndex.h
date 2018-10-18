@@ -26,6 +26,7 @@ int  IListHeight(IList);         // compute height of IList
 int  IListNumNodes(IList);       // count #nodes in IList
 IList IListInsert(IList, Word);   // insert a new Word into a IList
 IList IListDelete(IList, Word);   // delete a Word from a IList
+void outputIL(IList t, FILE *fp);
 
 void whiteBoxTests(void);           // tests invertedIndex ADT
 
