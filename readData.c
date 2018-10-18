@@ -103,7 +103,8 @@ IList getInvertedList(List L) {
                     IList wordNode = IListSearch(IL, word);
                     if (wordNode == NULL) {
                         IL = IListInsert(IL, word);
-                        wordNode = IListSearch(IL, word);
+                        wordNode = IListSearch(IL, word); // sometimes crashes here
+                        // For some reason wordNode is sometimes NULL depite the word being in the IList
                     }
                     if (!inLL(wordNode->urlList, src)) {
                         wordNode->urlList = insertLL(wordNode->urlList, src);

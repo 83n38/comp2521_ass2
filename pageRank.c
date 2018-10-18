@@ -8,10 +8,12 @@
 
 #include "pageRank.h"
 
+/* used for blackbox testing pageRank.c
+ 
 int main(int argc, const char * argv[]) {
     // insert code here...
     printf("Starting in main!\n");
-    /*
+ 
     if (argc != 4) {
         fprintf(stderr, "Not enough arguments");
         return 1;
@@ -19,7 +21,7 @@ int main(int argc, const char * argv[]) {
     float d = atof(argv[1]);
     float diffPR = atof(argv[2]);
     int maxIterations = atoi(argv[3]);
-    */
+
     List L = getCollection();
     Graph g = getGraph(L);
     showGraph(g);
@@ -27,6 +29,7 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
+*/
 
 List getPageRankList(Graph g, float d, float diffPR, int maxIterations) {
    
