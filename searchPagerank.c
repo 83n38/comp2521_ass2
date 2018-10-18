@@ -1,19 +1,14 @@
 //
-//  main.c
-//  Comp2521 ass2
+//  searchPagerank.c
+//  COMP2521_assign2
 //
-//  Created by Riley Vozzo on 8/10/18.
-//  Copyright © 2018 Riley Vozzo. All rights reserved.
+//  Created by Ben Henderson on 18/10/18.
+//  Copyright © 2018 Ben Henderson. All rights reserved.
 //
 
-#include <stdio.h>
+#include "searchPagerank.h"
 #include "readData.h"
 
-
-/*
- 
- *****  MAIN IS NOW IN searchPagerank.c  *****
- 
 int main(int argc, const char * argv[]) {
     // insert code here...
     printf("Starting in main!\n");
@@ -25,5 +20,3 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-
-*/
