@@ -13,12 +13,14 @@ int main(int argc, const char * argv[]) {
     // insert code here...
     if (argc == 1) {
         printf("Usage: ./%s <search term> <search term>...", argv[0]);
+        return 0;
     }
     
-    printf("Search terms: ");
-    for (int i = 1; i < argc; i++) {
+    int i = 1;
+    for (printf("Search terms: "); i < argc - 1; i++) {
         printf("%s, ", argv[i]);
     }
+    printf("%s\n", argv[i]);
     
     List L = getCollection();
     Graph g = getGraph(L);
