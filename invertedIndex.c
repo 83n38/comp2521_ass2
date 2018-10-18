@@ -285,5 +285,4 @@ void outputIL(IList t, FILE *fp) {
     fprintf(fp, "\n");
     
     outputIL(right(t), fp);
-    
 }

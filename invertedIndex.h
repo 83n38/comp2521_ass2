@@ -10,6 +10,7 @@ typedef char* Word;      // Word is just a key
 
 typedef struct BSTNode *IList;
 
+// I don't know whether this should be in invertedIndex.h (shouldn't it be hidden as its an ADT?)
 typedef struct BSTNode {
     char *word;
     List urlList;
@@ -25,6 +26,8 @@ int  IListHeight(IList);         // compute height of IList
 int  IListNumNodes(IList);       // count #nodes in IList
 IList IListInsert(IList, Word);   // insert a new Word into a IList
 IList IListDelete(IList, Word);   // delete a Word from a IList
+
+void whiteBoxTests(void);           // tests invertedIndex ADT
 
 // internal functions made visible for testing
 IList rotateRight(IList);

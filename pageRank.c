@@ -8,6 +8,7 @@
 
 #include "pageRank.h"
 
+
 static void bubbleSortPageRankList(List head);
 static void swap(Node *a, Node *b);
 
@@ -16,8 +17,7 @@ static void swap(Node *a, Node *b);
 int main(int argc, const char * argv[]) {
     // insert code here...
     printf("Starting in main!\n");
-    
-    
+ 
     if (argc != 4) {
         fprintf(stderr, "Not enough arguments");
         return 1;
@@ -25,13 +25,11 @@ int main(int argc, const char * argv[]) {
     double d = atof(argv[1]);
     double diffPR = atof(argv[2]);
     int maxIterations = atoi(argv[3]);
- 
     
     double d = 0.85;
     double diffPR = 0.0001;
     int maxIterations = 10000;
 
-    
     List L = getCollection();
     Graph g = getGraph(L);
 
@@ -53,6 +51,7 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 */
+
 List getPageRankList(Graph g, double d, double diffPR, int maxIterations) {
    
     
