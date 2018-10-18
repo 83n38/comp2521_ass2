@@ -11,8 +11,6 @@
 #define strEQ(g,t) (strcmp((g),(t)) == 0)
 
 static int vertexID(char *, char **, int);
-static int sumNeighborInLinks(Graph g, List Edges);
-static int sumNeighborOutLinks(Graph g, List Edges);
 
 
 Graph newGraph(List L) {
@@ -32,19 +30,19 @@ Graph newGraph(List L) {
     g->edges = malloc(nV * sizeof(List));
     assert(g->edges != NULL);
     // allocate memory for page ranks/newRanks
-    g->ranks = malloc(nV * sizeof(float));
+    g->ranks = malloc(nV * sizeof(double));
     assert(g->ranks != NULL);
-    g->newRanks = malloc(nV * sizeof(float));
+    g->newRanks = malloc(nV * sizeof(double));
     assert(g->ranks != NULL);
     // allocate memory for Nin/outLinks
-    g->nInLinks = malloc(nV * sizeof(float));
+    g->nInLinks = malloc(nV * sizeof(double));
     assert(g->nInLinks != NULL);
-    g->nOutLinks = malloc(nV * sizeof(float));
+    g->nOutLinks = malloc(nV * sizeof(double));
     assert(g->nInLinks != NULL);
     //allocate memory for sumNeighboursIn/OutLinks
-    g->sumNeighboursInLinks = malloc(nV * sizeof(float));
+    g->sumNeighboursInLinks = malloc(nV * sizeof(double));
     assert(g->sumNeighboursInLinks != NULL);
-    g->sumNeighboursOutLinks = malloc(nV * sizeof(float));
+    g->sumNeighboursOutLinks = malloc(nV * sizeof(double));
     assert(g->sumNeighboursOutLinks != NULL);
 
     List curr = L;
@@ -73,8 +71,10 @@ void insertEdge(Graph g, char *src, char *dest) {
     
     if (!inLL(g->edges[v], dest)) {   // edge e not in graph
         g->edges[v] = insertLL(g->edges[v], dest);
-        g->nInLinks[w]++;
-        g->nOutLinks[v]++;
+        if (v != w) { //only add in/outLink if not loop
+            g->nInLinks[w]++;
+            g->nOutLinks[v]++;
+        }
         g->nE++;
     }
 }
@@ -106,8 +106,7 @@ void showGraph(Graph g) {
     printf("Number of vertices: %d\n", g->nV);
     printf("Number of edges: %d\n", g->nE);
     for (i = 0; i < g->nV; i++) {
-        printf("nIn: %.1f, nOut: %.1f ", g->sumNeighboursInLinks[i], g->sumNeighboursOutLinks[i]);
-        printf("%d - ", i);
+        printf("%s: %d - ", g->urls[i], i);
         showLL(g->edges[i]);
     }
 }
@@ -138,11 +137,10 @@ void freeGraph(Graph g) {
 }
 
 
-/* Changes number of incoming/outcoming Links to 0.5
+/* Changes number of outgoing Links to 0.5
    if zero in order to avoid division by zero errors */
 void adjustNLinks(Graph g) {
     for(int v = 0; v < g->nV; v++) {
-        if(g->nInLinks[v] == 0) { g->nInLinks[v] = 0.5; }
         if(g->nOutLinks[v] == 0) { g->nOutLinks[v] = 0.5; }
     }
 }

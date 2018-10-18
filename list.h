@@ -9,9 +9,10 @@ typedef struct Node *List;
 
 typedef struct Node {
     char*        url;
-    float        rank; //may not be used
-    float        Win;  //may not be used
-    float        Wout; //may not be used
+    double        rank; //may not be used
+    int          nOut; //may not be used
+    double        Win;  //may not be used
+    double        Wout; //may not be used
     struct Node *next;
 } Node;
 
