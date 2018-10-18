@@ -269,3 +269,21 @@ IList rebalance(IList t) {
     }
     return t;
 }
+
+void outputIL(IList t, FILE *fp) {
+    
+    if (t == NULL) {
+        return;
+    }
+    
+    outputIL(left(t), fp);
+    
+    fprintf(fp, "%s  ", t->word);
+    for (List curr = t->urlList; curr != NULL; curr = curr->next) {
+        fprintf(fp, "%s ", curr->url);
+    }
+    fprintf(fp, "\n");
+    
+    outputIL(right(t), fp);
+    
+}
