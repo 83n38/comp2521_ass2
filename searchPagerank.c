@@ -7,8 +7,8 @@
 //
 
 #include "searchPagerank.h"
-#include "readData.h"
-#include "list.h"
+
+/*
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -16,14 +16,39 @@ int main(int argc, const char * argv[]) {
         printf("Usage: ./%s <search term> <search term>...", argv[0]);
         return 0;
     }
-    
+    int nTerms = argc - 1;
+    char **searchTerms = malloc(nTerms * sizeof(char*));
     int i = 1;
-    for (printf("Search terms: "); i < argc - 1; i++) {
-        
-        printf("%s, ", argv[i]);
-    }
-    printf("%s\n", argv[i]);
+    for (printf("Search terms: "); i <= nTerms; i++) {
     
+        searchTerms[i-1] = strdup(argv[i]);
+        printf("%s, ", argv[i]);
+        
+    }
+    
+    List matched_Url_list = findMatchedUrls(searchTerms, nTerms);
+    addRanks(matched_Url_list);
+    
+    int (*compareRanksPtr)(Node *, Node *);
+    compareRanksPtr = &compareRanks;
+    bubbleSortByRank(matched_Url_list);
+    
+    for (int i = 0; i < nTerms; i++) {
+        free(searchTerms[i]);
+    }
+    free(searchTerms);
+    for (List curr = matched_Url_list; curr != NULL; curr = curr->next) {
+        printf("%s: nMatch %d  rank %lf\n", curr->url, curr->matchCount, curr->rank);
+    }
+    
+    
+    return 0;
+}
+*/
+List findMatchedUrls(char *searchTerms[], int nTerms) {
+    
+    List matched_Url_list = NULL;
+
     // open invertedIndex.txt
     FILE* fp;
     fp = fopen("invertedIndex.txt", "r");
@@ -36,26 +61,67 @@ int main(int argc, const char * argv[]) {
     char line[1000] = "\0";
     
     while (fgets(line, 1000, fp) != NULL) {
-        char word[50] = "\0";
-        int wordCount = 0;
-
-        while (sscanf(line, "%s", word) == 1) {
+        char *word;
+        int urlCount = 0;
+        int wordsMatched = 0;
+        char *line2 = strdup(line);
+        while ((word = strsep(&line2, " ")) != NULL) {
             // check to see if the word is one of our search terms
-            if (wordCount == 0) {
+            if (urlCount == 0) {
                 // then see if this is a search term
-                int i = 1;
-                for (char* searchTerm = argv[i]; i < argc - 1; searchTerm = argv[++i] ) {
-                    if(strcmp(word, searchTerm) == 0) {
+                for (int i = 0; i < nTerms; i++ ) {
+                    if(strcmp(word, searchTerms[i]) == 0) {
                         // we found the search term in the invertedIndex
+                        wordsMatched++;
                         printf("found a match\n");
                         
                     }
                 }
+            } else if (wordsMatched && word[0] == 'u') {
+                // add this current url to the linked list
+                Node *url = inLL(matched_Url_list, word);
+                if(url != NULL) {
+                    url->matchCount++;
+                } else {
+                    matched_Url_list = insertLL(matched_Url_list, word);
+                    url = inLL(matched_Url_list, word);
+                    url->matchCount = 1;
+                }
             }
             
-            wordCount++;
+            urlCount++;
             
         }
+        free(line2);
     }
     
     
+    return matched_Url_list;
+}
+
+void addRanks(List matched_Urls) {
+    
+    FILE* fp;
+    fp = fopen("pagerankList.txt", "r");
+    if (fp == NULL) {
+        printf("File not found");
+        return;
+    }
+    
+    char line[1000] = "\0";
+    
+    while (fgets(line, 1000, fp) != NULL) {
+        char word[50];
+        int nOut;
+        double rank;
+        if (sscanf(line, "%50[^,], %d, %lf\n", word, &nOut, &rank)) {
+            // check to see if the word is one of our search terms
+            Node *url = inLL(matched_Urls, word);
+            if(url != NULL) {
+                url->rank = rank;
+            }
+        }
+    }
+}
+
+
