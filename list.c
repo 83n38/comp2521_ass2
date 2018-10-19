@@ -77,7 +77,7 @@ void freeLL(List L) {
     }
 }
 
-void bubbleSortByRank(List head, int (*compare)(Node*, Node*)) {
+void bubbleSort(List head, int (*compare)(Node*, Node*)) {
     int swapped = 1;
     Node *curr;
     Node *end = NULL;
@@ -112,9 +112,34 @@ static void swap(Node *a, Node *b) {
     a->url = b->url;
     a->nOut = b->nOut;
     a->rank = b->rank;
+    a->matchCount = b->matchCount;
+    
     b->url = tempUrl;
     b->nOut = tempNout;
     b->rank = tempRank;
     b->matchCount = tempMatchCount;
 }
 
+
+// Different sort options
+// each is a comparison function
+
+//if a < b returns negative
+//if a == b returns zero
+//if a > b returns positive
+
+// by rank
+int compareRanks(Node *a, Node *b) {
+    if(a->rank == b->rank) {
+        return 0;
+    } if (a->rank > b->rank) {
+        return 1;
+    }
+    // a < b
+    return -1;
+}
+
+// by matches
+int compareMatches(Node *a, Node *b) {
+    return a->matchCount - b->matchCount;
+}

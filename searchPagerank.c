@@ -8,8 +8,6 @@
 
 #include "searchPagerank.h"
 
-/*
-
 int main(int argc, const char * argv[]) {
     // insert code here...
     if (argc == 1) {
@@ -26,12 +24,21 @@ int main(int argc, const char * argv[]) {
         
     }
     
+    // get a linked list of the urls that matched, and count how many matches
     List matched_Url_list = findMatchedUrls(searchTerms, nTerms);
+    
+    // add their corresponding page rank
     addRanks(matched_Url_list);
     
-    int (*compareRanksPtr)(Node *, Node *);
-    compareRanksPtr = &compareRanks;
-    bubbleSortByRank(matched_Url_list);
+    // init function pointer
+    int (*comparePtr)(Node *, Node *);
+    // sort by ranks
+    comparePtr = &compareRanks;
+    bubbleSort(matched_Url_list, comparePtr);
+    
+    // now sort by matches
+    comparePtr = &compareMatches;
+    bubbleSort(matched_Url_list, comparePtr);
     
     for (int i = 0; i < nTerms; i++) {
         free(searchTerms[i]);
@@ -44,7 +51,7 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-*/
+
 List findMatchedUrls(char *searchTerms[], int nTerms) {
     
     List matched_Url_list = NULL;
