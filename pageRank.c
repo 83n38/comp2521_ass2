@@ -120,6 +120,12 @@ void savePageRanks(Graph g) {
 //if a == b returns zero
 //if a > b returns positive
 int compareRanks(Node *a, Node *b) {
-    return a->rank - b->rank;
+    if(a->rank - b->rank == 0) {
+        return 0;
+    } if (a->rank - b->rank > 0) {
+        return 1;
+    } //if (a->rank - b->rank < 0) {
+    return -1;
+    //}
 }
 
