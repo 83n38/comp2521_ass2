@@ -9,10 +9,7 @@
 #include "pageRank.h"
 
 
-static void bubbleSortPageRankList(List head);
-static void swap(Node *a, Node *b);
-
-
+int compareRanks(Node *a, Node *b);
 
 int main(int argc, const char * argv[]) {
  
@@ -26,15 +23,11 @@ int main(int argc, const char * argv[]) {
 
     List L = getCollection();
     Graph g = getGraph(L);
-    /*
-    showGraph(g);
-    for (int v = 0; v < g->nV; v++) {
-        printf("url: %s, in: %0.7f, out: %.7f\n", g->urls[v], g->nInLinks[v], g->nOutLinks[v]);
-    }
-     */
 
     List pageRankList = getPageRankList(g, d, diffPR, maxIterations);
-    bubbleSortPageRankList(pageRankList);
+    int (*compareRanksPtr)(Node *, Node *);
+    compareRanksPtr = &compareRanks;
+    bubbleSortByRank(pageRankList, &compareRanks);
     
     FILE *fp;
     fp = fopen("pagerankList.txt", "w");
@@ -123,42 +116,10 @@ void savePageRanks(Graph g) {
     }
 }
 
-/* Bubble sort a given pageRanklist by rank */
-static void bubbleSortPageRankList(List head) {
-    int swapped = 1;
-    Node *curr;
-    Node *end = NULL;
-    
-    /* Checking for empty list */
-    if (head == NULL) {
-        fprintf(stderr, "pageRankList is empty");
-        return;
-    }
-    while (swapped) {
-        swapped = 0;
-        curr = head;
-        while (curr->next != end)
-        {
-            if (curr->rank < curr->next->rank)
-            {
-                swap(curr, curr->next);
-                swapped = 1;
-            }
-            curr = curr->next;
-        }
-        end = curr;
-    }
+//if a < b returns negative
+//if a == b returns zero
+//if a > b returns positive
+int compareRanks(Node *a, Node *b) {
+    return a->rank - b->rank;
 }
 
-/* function to swap data of two pageRankList nodes a and b*/
-static void swap(Node *a, Node *b) {
-    char *tempUrl = a->url;
-    int tempNout = a->nOut;
-    double tempRank = a->rank;
-    a->url = b->url;
-    a->nOut = b->nOut;
-    a->rank = b->rank;
-    b->url = tempUrl;
-    b->nOut = tempNout;
-    b->rank = tempRank;
-}

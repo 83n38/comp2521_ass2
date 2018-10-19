@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-
+static void swap(Node *a, Node *b);
 
 Node *makeNode(char *url) {
     Node *new = malloc(sizeof(Node));
@@ -76,3 +76,45 @@ void freeLL(List L) {
         free(L);
     }
 }
+
+void bubbleSortByRank(List head, int (*compare)(Node*, Node*)) {
+    int swapped = 1;
+    Node *curr;
+    Node *end = NULL;
+    
+    /* Checking for empty list */
+    if (head == NULL) {
+        fprintf(stderr, "pageRankList is empty");
+        return;
+    }
+    while (swapped) {
+        swapped = 0;
+        curr = head;
+        while (curr->next != end)
+        {
+            if ((*compare)(curr, curr->next) < 0)
+            {
+                swap(curr, curr->next);
+                swapped = 1;
+            }
+            curr = curr->next;
+        }
+        end = curr;
+    }
+}
+
+/* function to swap data of two pageRankList nodes a and b*/
+static void swap(Node *a, Node *b) {
+    char *tempUrl = a->url;
+    int tempNout = a->nOut;
+    double tempRank = a->rank;
+    int tempMatchCount = a->matchCount;
+    a->url = b->url;
+    a->nOut = b->nOut;
+    a->rank = b->rank;
+    b->url = tempUrl;
+    b->nOut = tempNout;
+    b->rank = tempRank;
+    b->matchCount = tempMatchCount;
+}
+
