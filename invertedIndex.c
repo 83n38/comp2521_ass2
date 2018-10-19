@@ -270,33 +270,19 @@ IList rebalance(IList t) {
     return t;
 }
 
-void whiteBoxTests() {
-    IList IL = newIList();
-    int size = 4;
-    char word[size];
+void outputIL(IList t, FILE *fp) {
     
-    // generate some random words
-    for (int i = 0; i < 9999; i++) {
-        
-        // generate some random letters
-        for (int c = 0; c < size -1; c++) {
-            char r = 'A' + (random() % 26);
-            
-            word[c] = r;
-            c++;
-        }
-        
-        
-    
-        IList wordNode = IListSearch(IL, word);
-        if (wordNode == NULL) {
-            IL = IListInsert(IL, word);
-            wordNode = IListSearch(IL, word); // sometimes crashes here
-            // For some reason wordNode is sometimes NULL depite the word being in the IList
-        }
-//        if (!inLL(wordNode->urlList, src)) {
-//            wordNode->urlList = insertLL(wordNode->urlList, src);
-//        }
+    if (t == NULL) {
+        return;
     }
     
+    outputIL(left(t), fp);
+    
+    fprintf(fp, "%s  ", t->word);
+    for (List curr = t->urlList; curr != NULL; curr = curr->next) {
+        fprintf(fp, "%s ", curr->url);
+    }
+    fprintf(fp, "\n");
+    
+    outputIL(right(t), fp);
 }

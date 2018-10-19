@@ -12,11 +12,9 @@
 static void bubbleSortPageRankList(List head);
 static void swap(Node *a, Node *b);
 
-/*
+
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    printf("Starting in main!\n");
  
     if (argc != 4) {
         fprintf(stderr, "Not enough arguments");
@@ -25,23 +23,27 @@ int main(int argc, const char * argv[]) {
     double d = atof(argv[1]);
     double diffPR = atof(argv[2]);
     int maxIterations = atoi(argv[3]);
-    
-    double d = 0.85;
-    double diffPR = 0.0001;
-    int maxIterations = 10000;
 
     List L = getCollection();
     Graph g = getGraph(L);
-
+    /*
     showGraph(g);
     for (int v = 0; v < g->nV; v++) {
         printf("url: %s, in: %0.7f, out: %.7f\n", g->urls[v], g->nInLinks[v], g->nOutLinks[v]);
     }
+     */
 
     List pageRankList = getPageRankList(g, d, diffPR, maxIterations);
     bubbleSortPageRankList(pageRankList);
+    
+    FILE *fp;
+    fp = fopen("pagerankList.txt", "w");
+    if(fp == NULL) {
+        perror("Error: ");
+    }
+    
     for (List curr = pageRankList; curr != NULL; curr = curr->next) {
-        printf("%s, %d, %.7f\n", curr->url, curr->nOut, curr->rank);        
+        fprintf(fp, "%s, %d, %.7f\n", curr->url, curr->nOut, curr->rank);
     }
     
     
@@ -50,7 +52,7 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-*/
+
 
 List getPageRankList(Graph g, double d, double diffPR, int maxIterations) {
    

@@ -59,11 +59,3 @@ int main(int argc, const char * argv[]) {
     }
     
     
-    
-    List L = getCollection();
-    Graph g = getGraph(L);
-    IList IL = getInvertedList(L);
-    showGraph(g);
-    
-    return 0;
-}
