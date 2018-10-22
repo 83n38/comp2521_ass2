@@ -62,7 +62,7 @@ Graph getGraph(List L) {
         fclose(fp);
     }
     
-    //adjustNLinks(G); //prevents division by zero errors
+    adjustNLinks(G); //prevents division by zero errors
     sumNeighborLinks(G); /* Calculates the sum of the incoming/outgoing
                           links of the neighbors of a all vertexs */
     

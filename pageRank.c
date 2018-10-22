@@ -27,16 +27,19 @@ int main(int argc, const char * argv[]) {
     List pageRankList = getPageRankList(g, d, diffPR, maxIterations);
     int (*compareRanksPtr)(Node *, Node *);
     compareRanksPtr = &compareRanks;
-    bubbleSortByRank(pageRankList, &compareRanks);
+    //bubbleSortByRank(pageRankList, &compareRanks);
     
     FILE *fp;
+    fp = stdin;
+    /*
     fp = fopen("pagerankList.txt", "w");
     if(fp == NULL) {
         perror("Error: ");
     }
+     */
     
     for (List curr = pageRankList; curr != NULL; curr = curr->next) {
-        fprintf(fp, "%s, %d, %.7f\n", curr->url, curr->nOut, curr->rank);
+        printf("%s, %d, %.7f\n", curr->url, curr->nOut, curr->rank);
     }
     
     
@@ -58,16 +61,16 @@ List getPageRankList(Graph g, double d, double diffPR, int maxIterations) {
     
     int iteration = 0;
     double diff = diffPR;
-    while(iteration < maxIterations && diff >= diffPR) {
+    while(iteration < maxIterations && !(diff < diffPR)) {
        
-        /*
+        
         printf("Iteration %d\n", iteration);
         
         for (int v = 0; v < g->nV; v++) {
             printf("%s: %.7f\n",g->urls[v] ,g->ranks[v]);
         }
         printf("\n");
-        */
+        
         
         calculatePageRanks(g, d);
         diff = calculateDiff(g);

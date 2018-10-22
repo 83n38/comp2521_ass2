@@ -70,8 +70,8 @@ void insertEdge(Graph g, char *src, char *dest) {
     assert(g != NULL && validV(g,v) && validV(g,w));
     
     if (!inLL(g->edges[v], dest)) {   // edge e not in graph
-        g->edges[v] = insertLL(g->edges[v], dest);
         if (v != w) { //only add in/outLink if not loop
+            g->edges[v] = insertLL(g->edges[v], dest);
             g->nInLinks[w]++;
             g->nOutLinks[v]++;
         }
