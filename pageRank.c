@@ -52,9 +52,6 @@ int main(int argc, const char * argv[]) {
 
 List getPageRankList(Graph g, double d, double diffPR, int maxIterations) {
    
-    
-    //double damp = (((double)1-d)/(double)g->nV) + d; //calc only one because constant
-    
     for(int page = 0; page < g->nV; page++) {
         g->ranks[page] = (double)1/(double)g->nV;
     }
@@ -94,7 +91,6 @@ void calculatePageRanks(Graph g, double d) {
         double sum = 0;
         for(int v = 0; v < g->nV; v++) {
             if(inLL(g->edges[v], g->urls[w]) && v != w) {
-                //printf("%s -> %s\n", g->urls[v], g->urls[w]);
                 double Win = g->nInLinks[w]/g->sumNeighboursInLinks[v];
                 double Wout = g->nOutLinks[w]/g->sumNeighboursOutLinks[v];
                 sum += g->ranks[v] * Win * Wout;
