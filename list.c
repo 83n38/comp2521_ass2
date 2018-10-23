@@ -105,19 +105,26 @@ void bubbleSort(List head, int (*compare)(Node*, Node*)) {
 
 /* function to swap data of two pageRankList nodes a and b*/
 static void swap(Node *a, Node *b) {
-    char *tempUrl = a->url;
-    int tempNout = a->nOut;
-    double tempRank = a->rank;
-    int tempMatchCount = a->matchCount;
+    char    *tempUrl = a->url;
+    int     tempNout = a->nOut;
+    double  tempRank = a->rank;
+    int     tempMatchCount = a->matchCount;
+    int     tempNWords = a->nWords;
+    float   tempTf_idf = a->tf_idf;
+    
     a->url = b->url;
     a->nOut = b->nOut;
     a->rank = b->rank;
     a->matchCount = b->matchCount;
+    a->nWords = b->nWords;
+    a->tf_idf = b->tf_idf;
     
     b->url = tempUrl;
     b->nOut = tempNout;
     b->rank = tempRank;
     b->matchCount = tempMatchCount;
+    b->nWords = tempNWords;
+    b->tf_idf = tempTf_idf;
 }
 
 
@@ -144,3 +151,13 @@ int compareMatches(Node *a, Node *b) {
     return a->matchCount - b->matchCount;
 }
 
+// by tf-idf
+int compareTf_idf(Node *a, Node *b) {
+    if(a->tf_idf == b->tf_idf) {
+        return 0;
+    } if (a->tf_idf > b->tf_idf) {
+        return 1;
+    }
+    // a < b
+    return -1;
+}

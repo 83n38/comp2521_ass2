@@ -78,7 +78,7 @@ IList getInvertedList(List L) {
     char *url;
     
     for(List curr = L; curr != NULL; curr = curr->next) {
-        
+        int nWords = 0;
         src = mystrdup2(curr->url);
         url = mystrdup2(curr->url);
         strncat(url, ".txt", 5);
@@ -99,6 +99,7 @@ IList getInvertedList(List L) {
                 while(fscanf(fp, "%s", word) == 1
                       && strcmp(word, "#end") != 0)
                 {
+                    nWords++;
                     trim(word);
                     IList wordNode = IListSearch(IL, word);
                     //Create new node in IList if new word
@@ -107,15 +108,15 @@ IList getInvertedList(List L) {
                         wordNode = IListSearch(IL, word);
                     }
                     
-                    Node *url = inLL(wordNode->urlList, src);
+                    Node *urlNode = inLL(wordNode->urlList, src);
                     /*Create new node in urlList if new url and
                      initialise matchCount to 1*/
-                    if(url == NULL) {
+                    if(urlNode == NULL) {
                         wordNode->urlList = insertLL(wordNode->urlList, src);
-                        url = inLL(wordNode->urlList, src);
-                        url->matchCount = 1;
+                        urlNode = inLL(wordNode->urlList, src);
+                        urlNode->matchCount = 1;
                     } else {
-                        url->matchCount++;
+                        urlNode->matchCount++;
                     }
 
                 }
@@ -123,6 +124,7 @@ IList getInvertedList(List L) {
             }
         }
         fclose(fp);
+        curr->nWords = nWords;
     }
     IL = calculate_idf(IL, nPages);
     return IL;
