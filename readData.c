@@ -105,9 +105,9 @@ IList getInvertedList(List L) {
                     //Create new node in IList if new word
                     if (wordNode == NULL) {
                         IL = IListInsert(IL, word);
-                        wordNode = IListSearch(IL, word);
+                        //wordNode = IListSearch(IL, word);
                     }
-                    
+                    wordNode = IListSearch(IL, word);
                     Node *url = inLL(wordNode->urlList, src);
                     /*Create new node in urlList if new url and
                       initialise matchCount to 1*/
