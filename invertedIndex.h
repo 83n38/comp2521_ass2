@@ -13,6 +13,7 @@ typedef struct BSTNode *IList;
 // I don't know whether this should be in invertedIndex.h (shouldn't it be hidden as its an ADT?)
 typedef struct BSTNode {
     char *word;
+    double idf;
     List urlList;
     IList left, right;
 } BSTNode;

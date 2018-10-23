@@ -11,7 +11,7 @@ typedef struct Node {
     char*        url;
     double        rank; //may not be used
     int          nOut; //may not be used
-    int          matchCount;
+    int          matchCount; //may not be used
     struct Node *next;
 } Node;
 

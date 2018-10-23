@@ -19,7 +19,7 @@ List getCollection(void) {
     List L = NULL;
     char url[10] = "\0";
     while(fscanf(fp, "%s", url) == 1) {
-        L = insertLL(L, url); //'0' because no rank yet
+        L = insertLL(L, url);
     }
     fclose(fp);
     return L;
@@ -71,8 +71,7 @@ Graph getGraph(List L) {
 
 IList getInvertedList(List L) {
     
-    //Need to finish
-    
+    int nPages = lengthLL(L);
     IList IL = newIList();
     
     char *src;
@@ -101,14 +100,23 @@ IList getInvertedList(List L) {
                       && strcmp(word, "#end") != 0)
                 {
                     trim(word);
+                    
                     IList wordNode = IListSearch(IL, word);
+                    //Create new node in IList if new word
                     if (wordNode == NULL) {
                         IL = IListInsert(IL, word);
-                        wordNode = IListSearch(IL, word); // sometimes crashes here
-                        // For some reason wordNode is sometimes NULL depite the word being in the IList
+                        wordNode = IListSearch(IL, word);
                     }
-                    if (!inLL(wordNode->urlList, src)) {
+                    
+                    Node *url = inLL(wordNode->urlList, src);
+                    /*Create new node in urlList if new url and
+                      initialise matchCount to 1*/
+                    if(url == NULL) {
                         wordNode->urlList = insertLL(wordNode->urlList, src);
+                        url = inLL(wordNode->urlList, src);
+                        url->matchCount = 1;
+                    } else {
+                        url->matchCount++;
                     }
                 }
                 free(src); free(url); read = 0;
