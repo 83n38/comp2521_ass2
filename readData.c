@@ -33,9 +33,9 @@ Graph getGraph(List L) {
     char *url;
     for(int i = 0; i < G->nV; i++) {
         
-        src = strdup(G->urls[i]);
-        url = strdup(G->urls[i]);
-        strcat(url, ".txt");
+        src = mystrdup2(G->urls[i]);
+        url = mystrdup2(G->urls[i]);
+        strncat(url, ".txt", 5);
         
         FILE *fp;
         fp = fopen(url, "r");
@@ -79,9 +79,9 @@ IList getInvertedList(List L) {
     
     for(List curr = L; curr != NULL; curr = curr->next) {
         
-        src = strdup(curr->url);
-        url = strdup(curr->url);
-        strcat(url, ".txt");
+        src = mystrdup2(curr->url);
+        url = mystrdup2(curr->url);
+        strncat(url, ".txt", 5);
         FILE *fp;
         fp = fopen(url, "r");
         if (fp == NULL) {

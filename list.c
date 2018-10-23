@@ -10,7 +10,7 @@ static void swap(Node *a, Node *b);
 Node *makeNode(char *url) {
     Node *new = malloc(sizeof(Node));
     assert(new != NULL);
-    new->url = strdup(url);
+    new->url = mystrdup2(url);
     new->next = NULL;
     return new;
 }
@@ -143,3 +143,4 @@ int compareRanks(Node *a, Node *b) {
 int compareMatches(Node *a, Node *b) {
     return a->matchCount - b->matchCount;
 }
+

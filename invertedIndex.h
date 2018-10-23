@@ -5,12 +5,14 @@
 
 #include <stdbool.h>
 #include "list.h"
+#include "myString.h"
 
 typedef char* Word;      // Word is just a key
 
 typedef struct BSTNode *IList;
 
 // I don't know whether this should be in invertedIndex.h (shouldn't it be hidden as its an ADT?)
+
 typedef struct BSTNode {
     char *word;
     List urlList;

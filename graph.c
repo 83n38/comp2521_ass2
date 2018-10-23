@@ -47,7 +47,7 @@ Graph newGraph(List L) {
 
     List curr = L;
     for (i = 0; i < nV; i++) {
-        g->urls[i] = strdup(curr->url);
+        g->urls[i] = mystrdup2(curr->url);
         g->edges[i] = NULL;
         g->ranks[i] = 0;
         g->nInLinks[i] = g->nOutLinks[i] = 0;
@@ -158,6 +158,9 @@ void sumNeighborLinks(Graph g) {
         }
     }
 }
+
+
+
 
 
 

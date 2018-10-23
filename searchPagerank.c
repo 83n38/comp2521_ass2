@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
     int i = 1;
     for (printf("Search terms: "); i <= nTerms; i++) {
     
-        searchTerms[i-1] = strdup(argv[i]);
+        searchTerms[i-1] = mystrdup2(argv[i]);
         printf("%s, ", argv[i]);
         
     }
@@ -76,7 +76,7 @@ List findMatchedUrls(char *searchTerms[], int nTerms) {
         char *word;
         int urlCount = 0;
         int wordsMatched = 0;
-        char *line2 = strdup(line);
+        char *line2 = mystrdup2(line);
         while ((word = strsep(&line2, " ")) != NULL) {
             // check to see if the word is one of our search terms
             if (urlCount == 0) {

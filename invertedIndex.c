@@ -14,12 +14,11 @@
 #define left(IList)  ((IList)->left)
 #define right(IList)  ((IList)->right)
 
-
 // make a new node containing word
 IList newNode(Word word) {
     IList new = malloc(sizeof(Node));
     assert(new != NULL);
-    word(new) = strdup(word);
+    word(new) = mystrdup2(word);
     new->urlList = NULL;
     //new->idf = malloc(sizeof(double));
     left(new) = right(new) = NULL;

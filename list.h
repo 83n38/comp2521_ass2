@@ -4,6 +4,7 @@
 #define list_h
 
 #include <stdbool.h>
+#include "myString.h"
 
 typedef struct Node *List;
 
