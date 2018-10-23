@@ -7,7 +7,7 @@
 //
 
 #include "searchPagerank.h"
-
+/*
 int main(int argc, const char * argv[]) {
     // insert code here...
     if (argc == 1) {
@@ -51,7 +51,7 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-
+*/
 List findMatchedUrls(char *searchTerms[], int nTerms) {
     
     List matched_Url_list = NULL;
