@@ -13,6 +13,7 @@ typedef struct Node {
     int          nOut; //may not be used
     int          matchCount;
     struct Node *next;
+
 } Node;
 
 List insertLL(List, char *url);

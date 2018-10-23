@@ -21,6 +21,7 @@ IList newNode(Word word) {
     assert(new != NULL);
     word(new) = strdup(word);
     new->urlList = NULL;
+    //new->idf = malloc(sizeof(double));
     left(new) = right(new) = NULL;
     return new;
 }
@@ -286,3 +287,23 @@ void outputIL(IList t, FILE *fp) {
     
     outputIL(right(t), fp);
 }
+
+/*calculates the idf for entire inverted List*/
+
+IList calculate_idf(IList t, int nPages) {
+    
+    if(t == NULL) {
+        return NULL;
+    }
+    
+    left(t) = calculate_idf(left(t), nPages);
+    
+    printf("Before: %s\n", t->word);    
+    t->idf = log10f( (float)nPages / (float)lengthLL(t->urlList) );
+    printf("After: %s\n", t->word);
+    
+    right(t) = calculate_idf(right(t), nPages);
+    
+    return t;
+}
+

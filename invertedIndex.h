@@ -15,6 +15,7 @@ typedef struct BSTNode {
     char *word;
     List urlList;
     IList left, right;
+    float idf;
 } BSTNode;
 
 IList newIList(void);        // create an empty IList
@@ -27,6 +28,7 @@ int  IListNumNodes(IList);       // count #nodes in IList
 IList IListInsert(IList, Word);   // insert a new Word into a IList
 IList IListDelete(IList, Word);   // delete a Word from a IList
 void outputIL(IList t, FILE *fp);
+IList calculate_idf(IList t, int nPages);
 
 void whiteBoxTests(void);           // tests invertedIndex ADT
 
