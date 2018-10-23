@@ -41,7 +41,7 @@ int main(int argc, const char * argv[]) {
     
     
     for (List curr = pageRankList; curr != NULL; curr = curr->next) {
-        printf("%s, %d, %.7f\n", curr->url, curr->nOut, curr->rank);
+        fprintf(fp, "%s, %d, %.7f\n", curr->url, curr->nOut, curr->rank);
     }
     
     
@@ -62,14 +62,14 @@ List getPageRankList(Graph g, double d, double diffPR, int maxIterations) {
     double diff = diffPR;
     while(iteration < maxIterations && !(diff < diffPR)) {
        
-        
+        /*
         printf("Iteration %d\n", iteration);
         
         for (int v = 0; v < g->nV; v++) {
             printf("%s: %.7f\n",g->urls[v] ,g->ranks[v]);
         }
         printf("\n");
-        
+        */
         
         calculatePageRanks(g, d);
         diff = calculateDiff(g);

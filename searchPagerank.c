@@ -8,6 +8,8 @@
 
 #include "searchPagerank.h"
 
+
+
 int main(int argc, const char * argv[]) {
     // insert code here...
     if (argc == 1) {
@@ -44,6 +46,8 @@ int main(int argc, const char * argv[]) {
         free(searchTerms[i]);
     }
     free(searchTerms);
+    
+    //NEED TO CHANGE OUTPUT TO MATCH REQUIRED OUTPUT
     for (List curr = matched_Url_list; curr != NULL; curr = curr->next) {
         printf("%s: nMatch %d  rank %lf\n", curr->url, curr->matchCount, curr->rank);
     }
