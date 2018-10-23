@@ -17,6 +17,5 @@
 
 List findMatchedUrls(char** searchTerms, int nTerms);
 void addRanks(List matched_Urls);
-int compareRanks(Node *a, Node *b);
 
 #endif /* searchPagerank_h */

@@ -11,6 +11,8 @@
 
 int compareRanks(Node *a, Node *b);
 
+/*
+// MAIN IS NOW IN searchPagerank.c
 int main(int argc, const char * argv[]) {
  
     if (argc != 4) {
@@ -27,16 +29,16 @@ int main(int argc, const char * argv[]) {
     List pageRankList = getPageRankList(g, d, diffPR, maxIterations);
     int (*compareRanksPtr)(Node *, Node *);
     compareRanksPtr = &compareRanks;
-    //bubbleSortByRank(pageRankList, &compareRanks);
+    bubbleSort(pageRankList, &compareRanks);
     
     FILE *fp;
     fp = stdin;
-    /*
+ 
     fp = fopen("pagerankList.txt", "w");
     if(fp == NULL) {
         perror("Error: ");
     }
-     */
+    
     
     for (List curr = pageRankList; curr != NULL; curr = curr->next) {
         printf("%s, %d, %.7f\n", curr->url, curr->nOut, curr->rank);
@@ -48,7 +50,7 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-
+*/
 
 List getPageRankList(Graph g, double d, double diffPR, int maxIterations) {
    
@@ -115,10 +117,4 @@ void savePageRanks(Graph g) {
     }
 }
 
-//if a < b returns negative
-//if a == b returns zero
-//if a > b returns positive
-int compareRanks(Node *a, Node *b) {
-    return a->rank - b->rank;
-}
 

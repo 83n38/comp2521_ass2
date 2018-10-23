@@ -21,6 +21,10 @@ List inLL(List, char *url);
 void freeLL(List);
 void showLL(List);
 int lengthLL(List);
-void bubbleSortByRank(List head, int (*compare)(Node*, Node*));
+void bubbleSort(List head, int (*compare)(Node*, Node*));
+
+// comparison functions (to pass into bubble sort)
+int compareRanks(Node *a, Node *b);
+int compareMatches(Node *a, Node *b);
 
 #endif
