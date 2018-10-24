@@ -10,8 +10,8 @@
 
 
 /*
-int main(int argc, const char * argv[]) {
-    // insert code here...
+int main(int argc, char *argv[]) {
+    
     if (argc == 1) {
         printf("Usage: ./%s <search term> <search term>...", argv[0]);
         return 0;
@@ -41,22 +41,25 @@ int main(int argc, const char * argv[]) {
     // now sort by matches
     comparePtr = &compareMatches;
     bubbleSort(matched_Url_list, comparePtr);
-    
-    for (int i = 0; i < nTerms; i++) {
-        free(searchTerms[i]);
-    }
-    free(searchTerms);
+
     
     //NEED TO CHANGE OUTPUT TO MATCH REQUIRED OUTPUT
     for (List curr = matched_Url_list; curr != NULL; curr = curr->next) {
         printf("%s: nMatch %d  rank %lf\n", curr->url, curr->matchCount, curr->rank);
     }
     
+    freeLL(matched_Url_list);
+    for (int i = 0; i < nTerms - 1; i++) {
+        free(searchTerms[i]);
+    }
+    free(searchTerms);
     
     return 0;
 }
 */
- 
+
+
+// Returns a linked list of urls which match with search terms
 List findMatchedUrls(char *searchTerms[], int nTerms) {
     
     List matched_Url_list = NULL;
@@ -107,10 +110,11 @@ List findMatchedUrls(char *searchTerms[], int nTerms) {
         free(line2);
     }
     
-    
     return matched_Url_list;
 }
 
+
+// Adds ranks to the matched urls LL
 void addRanks(List matched_Urls) {
     
     FILE* fp;

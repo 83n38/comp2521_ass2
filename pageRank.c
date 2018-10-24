@@ -11,8 +11,7 @@
 
 int compareRanks(Node *a, Node *b);
 
-/*
-// MAIN IS NOW IN searchPagerank.c
+
 int main(int argc, const char * argv[]) {
  
     if (argc != 4) {
@@ -39,19 +38,18 @@ int main(int argc, const char * argv[]) {
         perror("Error: ");
     }
     
-    
     for (List curr = pageRankList; curr != NULL; curr = curr->next) {
         fprintf(fp, "%s, %d, %.7f\n", curr->url, curr->nOut, curr->rank);
     }
     
-    
-    //showGraph(g);
-    
+    freeLL(L);
+    freeGraph(g);
     
     return 0;
 }
-*/
 
+
+/* Gets a graph and returns a LL of urls with their page ranks*/
 List getPageRankList(Graph g, double d, double diffPR, int maxIterations) {
    
     for(int page = 0; page < g->nV; page++) {
@@ -61,15 +59,6 @@ List getPageRankList(Graph g, double d, double diffPR, int maxIterations) {
     int iteration = 0;
     double diff = diffPR;
     while(iteration < maxIterations && !(diff < diffPR)) {
-       
-        /*
-        printf("Iteration %d\n", iteration);
-        
-        for (int v = 0; v < g->nV; v++) {
-            printf("%s: %.7f\n",g->urls[v] ,g->ranks[v]);
-        }
-        printf("\n");
-        */
         
         calculatePageRanks(g, d);
         diff = calculateDiff(g);
@@ -87,6 +76,7 @@ List getPageRankList(Graph g, double d, double diffPR, int maxIterations) {
     return pageRanks;
 }
 
+/* Calculates the page ranks for the urls in a Graph */
 void calculatePageRanks(Graph g, double d) {
     
     for(int w = 0; w < g->nV; w++) {
@@ -102,6 +92,7 @@ void calculatePageRanks(Graph g, double d) {
     }
 }
 
+/* Calculates the difference in page ranks between iterations */
 double calculateDiff(Graph g) {
     double diff = 0;
     for(int page = 0; page < g->nV; page++) {

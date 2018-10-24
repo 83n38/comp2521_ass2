@@ -34,58 +34,13 @@ IList newIList() {
 void freeIList(IList t) {
     if (t != NULL) {
         free(t->word);
+        freeLL(t->urlList);
         freeIList(left(t));
         freeIList(right(t));
         free(t);
     }
 }
 
-//Don't really need to show IList
-
-// display IList horizontally
-// code by Jin Qu
-/*
-void showIListR(IList t, int index, char **record, char *largest) {
-    // record largest element along the way
-    if (t != NULL) {
-        record[index] = word(t);
-        if (strcmp(word(t), largest) > 0) {
-            strcpy(largest, word(t));
-        }
-        showIListR(left(t), 2 * index + 1, record, largest);
-        showIListR(right(t), 2 * index + 2, record, largest);
-    }
-}
-
-void showIList(IList t) {
-    int i, h = IListHeight(t);
-    char largest[100] = "a";
-    
-    //use an array of pointers to distinguish NULL node and node with value 0
-    char **record = calloc(pow(2, h + 1) - 1, sizeof(char*));
-    assert(record != NULL);
-    showIListR(t, 0, record, largest);
-    int size, lv = 0;
-    size = 1;
-    for (i = 0; i < pow(2, h + 1) - 1; i++) {
-        int space = size * ((int)(pow(2, h - lv + 1) - 1) / 2);
-        printf("%*s", space, "");
-        
-        // centralize nodes
-        if (record[i]) {
-            printf("%*c", size, *record[i]);
-        } else {
-            printf("%*s", size, "");
-        }
-        printf("%*s", space + size, "");
-        if (i == pow(2, lv + 1) - 2) {
-            printf("\n\n");
-            lv++;
-        }
-    }
-    free(record);
-}
-*/
  
 // compute height of IList
 int IListHeight(IList t) {
@@ -270,6 +225,7 @@ IList rebalance(IList t) {
     return t;
 }
 
+// Outputs an Inverted List
 void outputIL(IList t, FILE *fp) {
     
     if (t == NULL) {
@@ -287,8 +243,7 @@ void outputIL(IList t, FILE *fp) {
     outputIL(right(t), fp);
 }
 
-/*calculates the idf for entire inverted List*/
-
+/* Calculates the idf for entire inverted List*/
 IList calculate_idf(IList t, int nPages) {
     
     if(t == NULL) {
@@ -297,9 +252,9 @@ IList calculate_idf(IList t, int nPages) {
     
     left(t) = calculate_idf(left(t), nPages);
     
-    printf("Before: %s\n", t->word);    
+    //printf("Before: %s\n", t->word);
     t->idf = log10f( (float)nPages / (float)lengthLL(t->urlList) );
-    printf("After: %s\n", t->word);
+    //printf("After: %s\n", t->word);
     
     right(t) = calculate_idf(right(t), nPages);
     

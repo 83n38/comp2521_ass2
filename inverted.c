@@ -20,6 +20,10 @@ int main(int argc, const char * argv[]) {
     
     outputIL(IL, fp);
     
+    freeIList(IL);
+    freeLL(L);
+    
     return 0;
 }
+
 */

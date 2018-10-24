@@ -7,7 +7,7 @@
 //
 
 #include "searchTfIdf.h"
-
+/*
 int main(int argc, char * argv[]) {
     
     List L = getCollection();
@@ -27,8 +27,9 @@ int main(int argc, char * argv[]) {
     }
     printf("\n");
 
-    
+    //Get matching urlList with tf_idf values
     List tf_idf_list = get_tf_idf_list(IL, L, searchTerms, nTerms);
+ 
     // init function pointer
     int (*comparePtr)(Node *, Node *);
     // sort by tf-idf
@@ -38,10 +39,22 @@ int main(int argc, char * argv[]) {
     for (List curr = tf_idf_list; curr != NULL; curr = curr->next) {
         printf("%s: nMatch %d  tf-idf %0.6f\n", curr->url, curr->matchCount, curr->tf_idf);
     }
- 
+    
+    freeLL(L);
+    freeLL(tf_idf_list);
+    freeIList(IL);
+    for (int i = 0; i < nTerms; i++) {
+        free(searchTerms[i]);
+    }
+    free(searchTerms);
+    
     return 0;
 }
+*/
 
+
+/* Returns an LL of urls which match with the search terms,
+   along with their tf_idf */
 List get_tf_idf_list(IList IL, List collectionL, char **searchTerms, int nTerms) {
     
     List tf_idf_list = NULL;
@@ -54,6 +67,7 @@ List get_tf_idf_list(IList IL, List collectionL, char **searchTerms, int nTerms)
         while (curr != NULL) {
             
             Node *tf_idf_list_node = inLL(tf_idf_list, curr->url);
+            //if url not in LL, add and initialise it
             if(tf_idf_list_node == NULL) {
                 tf_idf_list = insertLL(tf_idf_list, curr->url);
                 tf_idf_list_node = inLL(tf_idf_list, curr->url);
