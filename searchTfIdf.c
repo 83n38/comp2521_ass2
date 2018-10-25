@@ -7,7 +7,7 @@
 //
 
 #include "searchTfIdf.h"
-/*
+
 int main(int argc, char * argv[]) {
     
     List L = getCollection();
@@ -19,14 +19,9 @@ int main(int argc, char * argv[]) {
     }
     int nTerms = argc - 1;
     char **searchTerms = malloc(nTerms * sizeof(char*));
-    int i = 1;
-    for (printf("Search terms: "); i <= nTerms; i++) {
-        
+    for (int i = 1; i <= nTerms; i++) {        
         searchTerms[i-1] = mystrdup2(argv[i]);
-        printf("%s, ", argv[i]);
     }
-    printf("\n");
-
     //Get matching urlList with tf_idf values
     List tf_idf_list = get_tf_idf_list(IL, L, searchTerms, nTerms);
  
@@ -37,7 +32,7 @@ int main(int argc, char * argv[]) {
     bubbleSort(tf_idf_list, comparePtr);
     
     for (List curr = tf_idf_list; curr != NULL; curr = curr->next) {
-        printf("%s: nMatch %d  tf-idf %0.6f\n", curr->url, curr->matchCount, curr->tf_idf);
+        printf("%s %0.6f\n", curr->url, curr->tf_idf);
     }
     
     freeLL(L);
@@ -50,7 +45,7 @@ int main(int argc, char * argv[]) {
     
     return 0;
 }
-*/
+
 
 
 /* Returns an LL of urls which match with the search terms,

@@ -8,7 +8,7 @@
 
 #include "searchPagerank.h"
 
-
+/*
 int main(int argc, char *argv[]) {
 
     if (argc == 1) {
@@ -17,12 +17,8 @@ int main(int argc, char *argv[]) {
     }
     int nTerms = argc - 1;
     char **searchTerms = malloc(nTerms * sizeof(char*));
-    int i = 1;
-    for (printf("Search terms: "); i <= nTerms; i++) {
-    
+    for (int i = 1; i <= nTerms; i++) {
         searchTerms[i-1] = mystrdup2(argv[i]);
-        printf("%s, ", argv[i]);
-        
     }
     
     // get a linked list of the urls that matched, and count how many matches
@@ -44,7 +40,7 @@ int main(int argc, char *argv[]) {
     
     //NEED TO CHANGE OUTPUT TO MATCH REQUIRED OUTPUT
     for (List curr = matched_Url_list; curr != NULL; curr = curr->next) {
-        printf("%s: nMatch %d  rank %lf\n", curr->url, curr->matchCount, curr->rank);
+        printf("%s\n", curr->url);
     }
     
     freeLL(matched_Url_list);
@@ -55,7 +51,7 @@ int main(int argc, char *argv[]) {
     
     return 0;
 }
-
+*/
 
 // Returns a linked list of urls which match with search terms
 List findMatchedUrls(char *searchTerms[], int nTerms) {
@@ -86,8 +82,6 @@ List findMatchedUrls(char *searchTerms[], int nTerms) {
                     if(strcmp(word, searchTerms[i]) == 0) {
                         // we found the search term in the invertedIndex
                         wordsMatched++;
-                        printf("found a match\n");
-                        
                     }
                 }
             } else if (wordsMatched && word[0] == 'u') {
