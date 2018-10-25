@@ -507,9 +507,9 @@ Set addToSet(Set C, char* u, int rank) {
     // add the new url to the beginning of the linked list
     C->head = malloc(sizeof(url));
     // init all the fields
-    C->head->name = malloc(strlen(u)*sizeof(char*));
+    C->head->name = malloc((strlen(u) + 1)*sizeof(char*));
     strcpy(C->head->name, u);
-    C->head->ranks = calloc(C->nRanks, sizeof(int));
+    C->head->ranks = calloc(C->nRanks + 1, sizeof(int));
     C->head->ranksSize = 1;
     C->head->ranks[0] = rank;
     C->head->next = h;
