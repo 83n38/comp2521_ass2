@@ -17,6 +17,7 @@ static double findMin(double **cost, int n, int *mI, int *mJ);
 static void freeNxN(void **a, int n);
 static void printNxN(int **a, int n);
 
+/*
 int main(int argc, const char * argv[]) {
     // if no arguments are given display usage
     if (argc == 1) {
@@ -65,7 +66,7 @@ int main(int argc, const char * argv[]) {
     freeNxN((void **) assignArray, n);
     
 }
-
+*/
 /* performs the hungarian algorithm on the n x n matrix cost
     https://en.wikipedia.org/wiki/Hungarian_algorithm
     Following the matrix interpretation from wikipedia
