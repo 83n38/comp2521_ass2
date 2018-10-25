@@ -20,7 +20,7 @@ static void printNxN(double **a, int n);
 void intPrintNxN(int **a, int n);
 static void trim(char *str);
 
-/*
+
 int main(int argc, const char * argv[]) {
     // if no arguments are given display usage
     if (argc == 1) {
@@ -57,7 +57,7 @@ int main(int argc, const char * argv[]) {
         for (int j = 0; j < C->size; j++) {
             // now calculate W(C->array[i], j)
             cost[i][j] = W(C->array[i], j);
-            //printf("cost[%d][%d]: %lf\n", i, j, cost[i][j]);
+            printf("cost[%d][%d]: %lf\n", i, j, cost[i][j]);
         }
     }
     printf("cost\n");
@@ -74,7 +74,7 @@ int main(int argc, const char * argv[]) {
     freeNxN((void **) assignArray, n);
     
 }
-*/
+
 /* performs the hungarian algorithm on the n x n matrix cost
     https://en.wikipedia.org/wiki/Hungarian_algorithm
     Following the matrix interpretation from wikipedia
@@ -378,8 +378,6 @@ double W(Url u, int j) {
     // sum for every input rank
     for (int i = 0; i < C->nRanks; i++) {
         w += fabs((double)(u->ranks[i] + 1)/(double)(C->sizeInputRanks[i]) - (double)(j+1)/(double)C->size);
-        double add;
-        printf("%d: %lf\n",i,fabs((double)(u->ranks[i] + 1)/(double)(C->sizeInputRanks[i]) - (double)(j+1)/(double)C->size));
     }
     return w;
 }

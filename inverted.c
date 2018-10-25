@@ -7,7 +7,7 @@
 //
 
 #include "inverted.h"
-
+/*
 int main(int argc, const char * argv[]) {
     
     List L = getCollection();
@@ -26,3 +26,4 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
+*/
