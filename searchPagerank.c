@@ -38,7 +38,6 @@ int main(int argc, char *argv[]) {
     bubbleSort(matched_Url_list, comparePtr);
 
     
-    //NEED TO CHANGE OUTPUT TO MATCH REQUIRED OUTPUT
     for (List curr = matched_Url_list; curr != NULL; curr = curr->next) {
         printf("%s\n", curr->url);
     }
