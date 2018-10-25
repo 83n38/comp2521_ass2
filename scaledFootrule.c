@@ -45,7 +45,10 @@ int main(int argc, const char * argv[]) {
     C = getC(C, rankings);
     
     // now we should close the files and free the rankings array
-    // TODO
+    for (int i = 0; i < n; i++) {
+        fclose(rankings[i]);
+    }
+    free(rankings);
     
     // now generate all the weights
     // malloc nxn array
