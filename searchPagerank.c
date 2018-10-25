@@ -9,7 +9,7 @@
 #include "searchPagerank.h"
 
 
-
+/*
 int main(int argc, const char * argv[]) {
     // insert code here...
     if (argc == 1) {
@@ -55,14 +55,14 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-
+*/
 List findMatchedUrls(char *searchTerms[], int nTerms) {
     
     List matched_Url_list = NULL;
 
     // open invertedIndex.txt
     FILE* fp;
-    fp = fopen("invertedIndex.txt", "r");
+    fp = fopen("invertedIndex.txt", "r"); // need to remember to close the file
     if (fp == NULL) {
         printf("File not found");
         return 0;
