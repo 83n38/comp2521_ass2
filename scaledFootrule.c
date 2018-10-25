@@ -16,8 +16,9 @@ static int rankAssigned(int **assignArray, int j, int n);
 int getNextRow(double **cost, int **assignArray, int *checked, int n);
 static double findMin(double **cost, int n, int *mI, int *mJ);
 static void freeNxN(void **a, int n);
-void freeSet(Set s);
-void intPrintNxN(int **a, int n);
+//static void printNxN(double **a, int n);
+//void freeSet(Set s);
+//void intPrintNxN(int **a, int n);
 static void trim(char *str);
 
 
@@ -94,7 +95,7 @@ int main(int argc, const char * argv[]) {
     freeNxN((void **) cost, n);
     freeNxN((void **) assignArray, n);
     
-    freeSet(C);
+    //freeSet(C);
     
 }
 
@@ -423,7 +424,7 @@ void freeNxN(void **a, int n) {
 // fills in the set from an array of file pointers to the input rankings
 Set getC(Set C, FILE **rankings) {
     // init the cardinality count
-    C->sizeInputRanks = calloc(C->nRanks, sizeof(int));
+    C->sizeInputRanks = calloc(C->nRanks + 1, sizeof(int));
     
     // loop through the rankings array
     for (int i = 0; i < C->nRanks; i++) {
@@ -455,7 +456,7 @@ Set getC(Set C, FILE **rankings) {
     }
     // once we know the size of C
     // create an array of urls for easy indexing
-    C->array = malloc(C->size * sizeof(Url));
+    C->array = malloc((C->size +1) * sizeof(Url));
     Url u = C->head;
     int i = 0;
     while (u != NULL) {
@@ -469,7 +470,7 @@ Set getC(Set C, FILE **rankings) {
 // ***** Methods for the dodgy set ******
 
 Set newSet(int n) {
-    Set s = malloc(sizeof(Set));
+    Set s = malloc(sizeof(Set) + 1);
     s->head = NULL;
     s->size = 0;
     s->nRanks = n;
@@ -483,9 +484,9 @@ Set addToSet(Set C, char* u, int rank) {
     // add the new url to the beginning of the linked list
     C->head = malloc(sizeof(url));
     // init all the fields
-    C->head->name = malloc(strlen(u)*sizeof(char*));
+    C->head->name = malloc((strlen(u) + 1)*sizeof(char*));
     strcpy(C->head->name, u);
-    C->head->ranks = calloc(C->nRanks, sizeof(int));
+    C->head->ranks = calloc(C->nRanks + 1, sizeof(int));
     C->head->ranksSize = 1;
     C->head->ranks[0] = rank;
     C->head->next = h;
@@ -507,7 +508,7 @@ Url inSet(Set C, char* u) {
     return NULL;
 }
 
-void freeSet(Set s) {
+/*void freeSet(Set s) {
     // free all the urls
     for (int i = 0; i < s->size; i++) {
         free(s->array[i]->name);
@@ -518,7 +519,7 @@ void freeSet(Set s) {
     free(s->array);
     free(s->sizeInputRanks);
     free(s);
-}
+}*/
 
 /* remove leading/trailing spaces from a string, as well as
  '.' (dot), ',' (comma), ';' (semicolon), ? (question mark)
