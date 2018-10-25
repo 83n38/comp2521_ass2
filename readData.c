@@ -33,9 +33,9 @@ Graph getGraph(List L) {
     char *url;
     for(int i = 0; i < G->nV; i++) {
         
-        src = strdup(G->urls[i]);
-        url = strdup(G->urls[i]);
-        strcat(url, ".txt");
+        src = mystrdup2(G->urls[i]);
+        url = mystrdup2(G->urls[i]);
+        strncat(url, ".txt", 5);
         
         FILE *fp;
         fp = fopen(url, "r");
@@ -71,18 +71,17 @@ Graph getGraph(List L) {
 
 IList getInvertedList(List L) {
     
-    //Need to finish
-    
+    int nPages = lengthLL(L);
     IList IL = newIList();
     
     char *src;
     char *url;
     
     for(List curr = L; curr != NULL; curr = curr->next) {
-        
-        src = strdup(curr->url);
-        url = strdup(curr->url);
-        strcat(url, ".txt");
+        int nWords = 0;
+        src = mystrdup2(curr->url);
+        url = mystrdup2(curr->url);
+        strncat(url, ".txt", 5);
         FILE *fp;
         fp = fopen(url, "r");
         if (fp == NULL) {
@@ -100,22 +99,34 @@ IList getInvertedList(List L) {
                 while(fscanf(fp, "%s", word) == 1
                       && strcmp(word, "#end") != 0)
                 {
+                    nWords++;
                     trim(word);
                     IList wordNode = IListSearch(IL, word);
+                    //Create new node in IList if new word
                     if (wordNode == NULL) {
                         IL = IListInsert(IL, word);
-                        wordNode = IListSearch(IL, word); // sometimes crashes here
-                        // For some reason wordNode is sometimes NULL depite the word being in the IList
+                        wordNode = IListSearch(IL, word);
                     }
-                    if (!inLL(wordNode->urlList, src)) {
+                    
+                    Node *urlNode = inLL(wordNode->urlList, src);
+                    /*Create new node in urlList if new url and
+                     initialise matchCount to 1*/
+                    if(urlNode == NULL) {
                         wordNode->urlList = insertLL(wordNode->urlList, src);
+                        urlNode = inLL(wordNode->urlList, src);
+                        urlNode->matchCount = 1;
+                    } else {
+                        urlNode->matchCount++;
                     }
+
                 }
                 free(src); free(url); read = 0;
             }
         }
         fclose(fp);
+        curr->nWords = nWords;
     }
+    IL = calculate_idf(IL, nPages);
     return IL;
 }
 

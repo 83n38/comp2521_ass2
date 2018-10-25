@@ -5,7 +5,7 @@
 
 #include <stdbool.h>
 #include "list.h"
-
+#include "myString.h"
 typedef struct GraphRep *Graph;
 
 // vertices are ints

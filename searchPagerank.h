@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include "list.h"
 #include "readData.h"
+#include "inverted.h"
 
 List findMatchedUrls(char** searchTerms, int nTerms);
 void addRanks(List matched_Urls);
