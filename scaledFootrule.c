@@ -13,9 +13,12 @@ static double W(Url u, int p);
 static int **hungarianAlgorithm(double **cost, int n);
 static int getAssignmentArray(double **cost, int n, int **assignArray);
 static int rankAssigned(int **assignArray, int j, int n);
+int getNextRow(double **cost, int **assignArray, int *checked, int n);
 static double findMin(double **cost, int n, int *mI, int *mJ);
 static void freeNxN(void **a, int n);
-static void printNxN(int **a, int n);
+static void printNxN(double **a, int n);
+void intPrintNxN(int **a, int n);
+static void trim(char *str);
 
 int main(int argc, const char * argv[]) {
     // if no arguments are given display usage
@@ -46,19 +49,24 @@ int main(int argc, const char * argv[]) {
     
     // now generate all the weights
     // malloc nxn array
-    double **cost = malloc(C->size*sizeof(double*));
+    n = C->size;
+    double **cost = malloc(n*sizeof(double*));
     for (int i = 0; i < C->size; i++) {
         cost[i] = malloc(C->size*sizeof(double));
         for (int j = 0; j < C->size; j++) {
             // now calculate W(C->array[i], j)
             cost[i][j] = W(C->array[i], j);
+            //printf("cost[%d][%d]: %lf\n", i, j, cost[i][j]);
         }
     }
+    printf("cost\n");
+    printNxN(cost, n);
     
     // now start the hungarian algorithm, attempting to match urls in C
     // with a rank in P where the weight of these matches is minimum
     int **assignArray = hungarianAlgorithm(cost, C->size);
-    printNxN(assignArray, n);
+    printf("assignment array\n");
+    intPrintNxN(assignArray, n);
     
     // free cost since we don't need it anymore
     freeNxN((void **) cost, n);
@@ -94,7 +102,7 @@ int **hungarianAlgorithm(double **cost, int n) {
     int goStep2 = 0;
     for(int i = 0; i < n; i++) {
         // for every row
-        int min = cost[i][0];
+        double min = cost[i][0];
         int zeros = 0; // count max amount of zeros in any column
         // for every column
         for(int j = 1; j < n; j++) {
@@ -115,13 +123,22 @@ int **hungarianAlgorithm(double **cost, int n) {
             goStep2 = 1;
         }
     }
-    int **assignArray = calloc(n, sizeof(int*));
+    int **assignArray = malloc(n*sizeof(int*));
+    assert(assignArray != NULL);
+
     for (int i = 0; i < n; i++) {
-        assignArray[n] = calloc(n, sizeof(int));
+        assignArray[i] = malloc(n*sizeof(int));
+        assert(assignArray[i] != NULL);
+        for (int j = 0; j < n; j++) {
+            assignArray[i][j] = 0;
+        }
     }
+    printf("After step1\n");
+    intPrintNxN(assignArray, n);
     if (!goStep2 && getAssignmentArray(cost, n, assignArray)) {
         // we found an optimal ranking and can return
-        printf("we found an optimal ranking and can return\n");
+        printf("we found an optimal ranking and can return in step2\n");
+        intPrintNxN(assignArray, n);
         return assignArray;
     }
     
@@ -225,11 +242,13 @@ int **hungarianAlgorithm(double **cost, int n) {
                 }
             }
         }
-        
+        printNxN(cost, n);
+        printf("^cost V assignArray\n");
+        intPrintNxN(assignArray, n);
     } // now repeat 3 and 4 until an assignment is possible (back to while loop above)
     
     // once we've broken out of the while we found an optimal ranking and can return
-    printf("we found an optimal ranking in step 2 and can return\n");
+    printf("we found an optimal ranking after repeating step 3 & 4 and can return\n");
     
     return assignArray;
 }
@@ -243,8 +262,34 @@ int getAssignmentArray(double **cost, int n, int **assignArray) {
             assignArray[i][j] = 0;
         }
     }
+//    // go through every row, and if the row only has one option select it first
+//    for (int i = 0; i < n; i++) {
+//        int zeros = 0;
+//        for (int j = 0; j < n; j++) {
+//            if (cost[i][j] == 0) {
+//                zeros++;
+//            }
+//        }
+//        // if there was only one zero
+//        if (zeros == 1) {
+//            // find where that zero is and select it
+//            for (int j = 0; j < n; j++) {
+//                if (cost[i][j] == 0 && !rankAssigned(assignArray, j, n)) {
+//                    // if we found an assignment set it in the array
+//                    assignArray[i][j] = 1;
+//                }
+//            }
+//        }
+//    }
     // for every url
-    for(int i = 0; i < n; i++) {
+    int checked[n];
+    for (int i = 0; i < n; i++) {
+        checked[i] = 0;
+    }
+    int done = 0;
+    
+    while(!done) {
+        int i = getNextRow(cost, assignArray, checked, n);
         int j = 0;
         // find the first 0 cost in this row where the corresping rank of that cost has not yet been assigned
         while ((cost[i][j] != 0 || rankAssigned(assignArray, j, n)) && j != n) {
@@ -257,8 +302,39 @@ int getAssignmentArray(double **cost, int n, int **assignArray) {
         } else if (j == n) {
             optimallyAssined = 0;
         }
+        
+        done = 1;
+        for (int i = 0; i < n; i++) {
+            done = done && checked[i];
+        }
     }
     return optimallyAssined;
+}
+
+// this returns the next row to check assignment
+// it will return rows based on the number of zeros in that row, lowest to highest
+int getNextRow(double **cost, int **assignArray, int *checked, int n) {
+    // o through every row that isnt checked
+    int minIndex = n;
+    int minZeros = n;
+    for (int i = 0; i < n; i++) {
+        if (checked[i]) continue;
+        int count = 0;
+        // see how many zeros it has
+        for (int j = 0; j < n; j++) {
+            if (cost[i][j] == 0) {
+                count++;
+            }
+        }
+        if (count <= minZeros) {
+            minZeros = count;
+            minIndex = i;
+        }
+        
+    }
+    // say that we've checked this row
+    checked[minIndex] = 1;
+    return minIndex;
 }
 
 // from the assignment array returns if the rank j has been assigned
@@ -300,7 +376,9 @@ double W(Url u, int j) {
     
     // sum for every input rank
     for (int i = 0; i < C->nRanks; i++) {
-        w += abs(u->ranks[i]/C->sizeInputRanks[i] - j/C->size);
+        w += fabs((double)(u->ranks[i] + 1)/(double)(C->sizeInputRanks[i]) - (double)(j+1)/(double)C->size);
+        double add;
+        printf("%d: %lf\n",i,fabs((double)(u->ranks[i] + 1)/(double)(C->sizeInputRanks[i]) - (double)(j+1)/(double)C->size));
     }
     return w;
 }
@@ -312,7 +390,18 @@ void freeNxN(void **a, int n) {
     free(a);
 }
 
-void printNxN(int **a, int n) {
+void printNxN(double **a, int n) {
+    if (n == 0) return;
+    for (int i = 0; i < n; i++) {
+        int j = 0;
+        for (; j < n - 1; j++) {
+            printf("%lf\t", a[i][j]);
+        }
+        printf("%lf\n", a[i][j]);
+    }
+}
+
+void intPrintNxN(int **a, int n) {
     if (n == 0) return;
     for (int i = 0; i < n; i++) {
         int j = 0;
@@ -337,6 +426,8 @@ Set getC(Set C, FILE **rankings) {
         int rankCount = 0;
         
         while (fgets(line, 1000, rankings[i]) != NULL) {
+            // trim the url
+            trim(line);
             // see if we have this url in the set already
             Url u = inSet(C, line);
             if (u == NULL) {
@@ -404,3 +495,27 @@ Url inSet(Set C, char* u) {
     }
     return NULL;
 }
+
+/* remove leading/trailing spaces from a string, as well as
+ '.' (dot), ',' (comma), ';' (semicolon), ? (question mark)
+ characters if at end of word.
+ P.S. Code is modifed from starting code in COMP1521 Ass02
+ */
+static void trim(char *str) {
+    int first, last;
+    first = 0;
+    while (isspace(str[first])) first++;
+    
+    last  = strlen(str)-1;
+    while (isspace(str[last]) || str[last] == '.' || str[last] == '?' ||
+           str[last] == ';' || str[last] == ',' || str[last] == '\n') {
+        last--;
+    }
+    int i, j = 0;
+    for (i = first; i <= last; i++) {
+        str[i] = tolower(str[i]);
+        str[j++] = str[i];
+    }
+    str[j] = '\0';
+}
+
