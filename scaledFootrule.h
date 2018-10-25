@@ -16,6 +16,8 @@
 #include <math.h>
 #include <ctype.h>
 
+#define EPSILON 0.00001
+
 typedef struct url *Url;
 typedef struct set *Set;
 

@@ -139,7 +139,7 @@ int **hungarianAlgorithm(double **cost, int n) {
             // find min element
             cost[i][j] -= min;
             assert(cost[i][j] >= 0);
-            if (fabs(cost[i][j]-0) < 0.001) {
+            if (fabs(cost[i][j]-0) < EPSILON) {
                 zeros++;
             }
         }
@@ -188,7 +188,7 @@ int **hungarianAlgorithm(double **cost, int n) {
             // find min element
             cost[i][j] -= min;
             assert(cost[i][j] >= 0);
-            if (fabs(cost[i][j]-0) < 0.001) {
+            if (fabs(cost[i][j]-0) < EPSILON) {
                 zeros++;
             }
         }
@@ -249,7 +249,7 @@ int **hungarianAlgorithm(double **cost, int n) {
                 if (mI[i] == 0) continue;
                 // 2. and mark all (unmarked) columns which have zeros
                 for (int j = 0; j < n; j++) {
-                    if (mJ[j] == 0 && fabs(cost[i][j]-0) < 0.001) {
+                    if (mJ[j] == 0 && fabs(cost[i][j]-0) < EPSILON) {
                         // mark this column
                         mJ[j] = 1;
                         marks++;
@@ -347,11 +347,11 @@ int getAssignmentArray(double **cost, int n, int **assignArray) {
         int minIndex = n;
         for (int j = 0; j < n; j++) {
             // if the cost is non zero or this rank is already assigned ignore it
-            if (fabs(cost[i][j]-0) > 0.001 || rankAssigned(assignArray, j, n)) continue;
+            if (fabs(cost[i][j]-0) > EPSILON || rankAssigned(assignArray, j, n)) continue;
             // find how many zeros are in this column
             int zeros = 0;
             for (int row = 0; row < n; row++) {
-                if(fabs(cost[row][j]-0) < 0.001) {
+                if(fabs(cost[row][j]-0) < EPSILON) {
                     zeros++;
                 }
             }
@@ -363,7 +363,7 @@ int getAssignmentArray(double **cost, int n, int **assignArray) {
         // we should select the i, j element
         int j = minIndex;
         // if the cost is zero and this rank has not already been assigned
-        if (fabs(cost[i][j]-0) < 0.001 && !rankAssigned(assignArray, j, n)) {
+        if (fabs(cost[i][j]-0) < EPSILON && !rankAssigned(assignArray, j, n)) {
             // if we found an assignment set it in the array
             assignArray[i][j] = 1;
         } else if (j == n) {
@@ -391,7 +391,7 @@ int getNextRow(double **cost, int **assignArray, int *checked, int n) {
         // see how many zeros it has
         // but only count the zero if we can choose it, i.e. it's not already assigned
         for (int j = 0; j < n; j++) {
-            if (fabs(cost[i][j]-0) < 0.001 && !rankAssigned(assignArray, j, n)) {
+            if (fabs(cost[i][j]-0) < EPSILON && !rankAssigned(assignArray, j, n)) {
                 count++;
             }
         }
