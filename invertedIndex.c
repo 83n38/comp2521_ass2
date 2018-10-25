@@ -18,7 +18,6 @@ IList newNode(Word word) {
     assert(new != NULL);
     word(new) = mystrdup2(word);
     new->urlList = NULL;
-    //new->idf = malloc(sizeof(double));
     left(new) = right(new) = NULL;
     return new;
 }
