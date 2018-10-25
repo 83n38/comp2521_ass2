@@ -16,9 +16,9 @@ static int rankAssigned(int **assignArray, int j, int n);
 int getNextRow(double **cost, int **assignArray, int *checked, int n);
 static double findMin(double **cost, int n, int *mI, int *mJ);
 static void freeNxN(void **a, int n);
-static void printNxN(double **a, int n);
+//static void printNxN(double **a, int n);
 void freeSet(Set s);
-void intPrintNxN(int **a, int n);
+//void intPrintNxN(int **a, int n);
 static void trim(char *str);
 
 
@@ -493,7 +493,7 @@ Set getC(Set C, FILE **rankings) {
 // ***** Methods for the dodgy set ******
 
 Set newSet(int n) {
-    Set s = malloc(sizeof(Set));
+    Set s = malloc(sizeof(Set) + 1);
     s->head = NULL;
     s->size = 0;
     s->nRanks = n;
