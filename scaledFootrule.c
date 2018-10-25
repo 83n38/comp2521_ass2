@@ -32,13 +32,13 @@ int main(int argc, const char * argv[]) {
     FILE **rankings = malloc(n * sizeof(FILE*));
     
     Set C = newSet(n);
-    printf("Ranking files: ");
+    //printf("Ranking files: ");
     for (int i = 1; i <= n; i++) {
         rankings[i-1] = fopen(argv[i], "r");
         if (rankings[i-1] == NULL) {
-            printf("%s was not found\n", argv[i]);
+            //printf("%s was not found\n", argv[i]);
         } else {
-            printf("%s was succesfully found\n", argv[i]);
+            //printf("%s was succesfully found\n", argv[i]);
         }
     }
     
@@ -62,19 +62,12 @@ int main(int argc, const char * argv[]) {
             // now calculate W(C->array[i], j)
             cost[i][j] = W(C->array[i], j);
             costClean[i][j] = cost[i][j];
-            printf("cost[%d][%d]: %lf\n", i, j, cost[i][j]);
         }
     }
-    printf("cost[0][1]: %lf\n", costClean[0][1]);
-    printNxN(cost, n);
-    
     // now start the hungarian algorithm, attempting to match urls in C
     // with a rank in P where the weight of these matches is minimum
     int **assignArray = hungarianAlgorithm(cost, C->size);
-    printf("assignment array\n");
-    intPrintNxN(assignArray, n);
-    
-    printf("list of stuff\n");
+
     // summ up the cost
     double totalCost = 0;
     for (int j = 0; j < n; j++) {
@@ -84,7 +77,7 @@ int main(int argc, const char * argv[]) {
             }
         }
     }
-    printf("%lf\n", totalCost);
+    printf("%.6f\n", totalCost);
     for (int j = 0; j < n; j++) {
         for (int i = 0; i < n; i++) {
             if (assignArray[i][j]) {
@@ -138,7 +131,7 @@ int **hungarianAlgorithm(double **cost, int n) {
         for(int j = 0; j < n; j++) {
             // find min element
             cost[i][j] -= min;
-            assert(cost[i][j] >= 0);
+            //assert(cost[i][j] >= 0);
             if (fabs(cost[i][j]-0) < EPSILON) {
                 zeros++;
             }
@@ -158,13 +151,9 @@ int **hungarianAlgorithm(double **cost, int n) {
             assignArray[i][j] = 0;
         }
     }
-    printf("After step1\n");
-    intPrintNxN(assignArray, n);
-    printNxN(cost, n);
+    
     if (!goStep2 && getAssignmentArray(cost, n, assignArray)) {
         // we found an optimal ranking and can return
-        printf("we found an optimal ranking and can return in step2\n");
-        intPrintNxN(assignArray, n);
         return assignArray;
     }
     
@@ -194,9 +183,6 @@ int **hungarianAlgorithm(double **cost, int n) {
         }
     }
     
-    printf("After step2\n");
-    intPrintNxN(assignArray, n);
-    printNxN(cost, n);
     // now we need to check if we can assign every url to a unique rank
     
     // while there is no optimal assignment repeat steps 3 & 4
@@ -222,10 +208,6 @@ int **hungarianAlgorithm(double **cost, int n) {
             mI[i] = 0;
             mJ[i] = 0;
         }
-        
-        printf("while marking columns\n");
-        intPrintNxN(assignArray, n);
-        printNxN(cost, n);
         
         // we have the assignArray from step 2
         int marks = 0; // count the marks so we know when to stop
@@ -265,30 +247,9 @@ int **hungarianAlgorithm(double **cost, int n) {
             }
         }
         
-        printf("After step3\n");
-        printf("marked rows: ");
-        for (int i = 0; i < n; i++) {
-            printf("%d ", mI[i]);
-        }
-        printf("\nmarked columns: ");
-        for (int j = 0; j < n; j++) {
-            printf("%d ", mJ[j]);
-        }
-        intPrintNxN(assignArray, n);
-        printNxN(cost, n);
-        
         // now we flip the marked rows
         for (int i = 0; i < n; i++) {
             mI[i] = !mI[i];
-        }
-        
-        printf("marked rows: ");
-        for (int i = 0; i < n; i++) {
-            printf("%d ", mI[i]);
-        }
-        printf("\nmarked columns: ");
-        for (int j = 0; j < n; j++) {
-            printf("%d ", mJ[j]);
         }
         
         /*  ****** Step 4 *******
@@ -308,14 +269,9 @@ int **hungarianAlgorithm(double **cost, int n) {
                 }
             }
         }
-        printf("After step4\n");
-        intPrintNxN(assignArray, n);
-        printNxN(cost, n);
     } // now repeat 3 and 4 until an assignment is possible (back to while loop above)
     
     // once we've broken out of the while we found an optimal ranking and can return
-    printf("we found an optimal ranking after repeating step 3 & 4 and can return\n");
-    
     return assignArray;
 }
 // returns 1 if optimally assigned, 0 if not
