@@ -421,7 +421,7 @@ void freeNxN(void **a, int n) {
 // fills in the set from an array of file pointers to the input rankings
 Set getC(Set C, FILE **rankings) {
     // init the cardinality count
-    C->sizeInputRanks = calloc(C->nRanks + 1, sizeof(int));
+    C->sizeInputRanks = calloc(C->nRanks + 10, sizeof(int));
     
     // loop through the rankings array
     for (int i = 0; i < C->nRanks; i++) {
@@ -483,7 +483,7 @@ Set addToSet(Set C, char* u, int rank) {
     // init all the fields
     C->head->name = malloc((strlen(u) + 1)*sizeof(char*) + 10);
     strcpy(C->head->name, u);
-    C->head->ranks = calloc(C->nRanks + 1, sizeof(int));
+    C->head->ranks = calloc(C->nRanks + 10, sizeof(int));
     C->head->ranksSize = 1;
     C->head->ranks[0] = rank;
     C->head->next = h;
