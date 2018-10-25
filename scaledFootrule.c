@@ -445,7 +445,7 @@ double W(Url u, int j) {
     double w = 0;
     
     // sum for every input rank
-    for (int i = 0; i < C->nRanks; i++) {
+    for (int i = 0; i < u->ranksSize; i++) {
         w += fabs((double)(u->ranks[i] + 1)/(double)(C->sizeInputRanks[i]) - (double)(j+1)/(double)C->size);
     }
     return w;
@@ -504,6 +504,8 @@ Set getC(Set C, FILE **rankings) {
             } else {
                 // if it is in the set then add this rank
                 u->ranks[i] = rankCount;
+                // increase the size
+                u->ranksSize++;
             }
             rankCount++;
         }
@@ -544,6 +546,7 @@ Set addToSet(Set C, char* u, int rank) {
     C->head->name = malloc(strlen(u)*sizeof(char*));
     strcpy(C->head->name, u);
     C->head->ranks = calloc(C->nRanks, sizeof(int));
+    C->head->ranksSize = 1;
     C->head->ranks[0] = rank;
     C->head->next = h;
     C->head->p = C;
