@@ -8,7 +8,7 @@
 
 #include "searchPagerank.h"
 
-/*
+
 int main(int argc, char *argv[]) {
 
     if (argc == 1) {
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
     
     return 0;
 }
-*/
+
 
 // Returns a linked list of urls which match with search terms
 List findMatchedUrls(char *searchTerms[], int nTerms) {
@@ -78,7 +78,7 @@ List findMatchedUrls(char *searchTerms[], int nTerms) {
         int urlCount = 0;
         int wordsMatched = 0;
         char *line2 = mystrdup2(line);
-        while ((word = strsep(&line2, " ")) != NULL) {
+        while ((word = mystrsep(&line2, " ")) != NULL) {
             // check to see if the word is one of our search terms
             if (urlCount == 0) {
                 // then see if this is a search term

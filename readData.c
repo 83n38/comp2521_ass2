@@ -142,7 +142,7 @@ static void trim(char *str) {
     
     last  = strlen(str)-1;
     while (isspace(str[last]) || str[last] == '.' || str[last] == '?' ||
-           str[last] == ';' || str[last] == ',') {
+           str[last] == ';' || str[last] == ',' || str[last] == '\n' ) {
         last--;
     }
     int i, j = 0;

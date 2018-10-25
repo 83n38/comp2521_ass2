@@ -11,7 +11,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 char *mystrdup2(char *src);
+char *mystrsep (char **stringp, const char *delim);
 
 #endif /* myString_h */
