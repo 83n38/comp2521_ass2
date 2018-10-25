@@ -32,10 +32,13 @@ int main(int argc, const char * argv[]) {
     bubbleSort(pageRankList, &compareRanks);
     
     FILE *fp;
+    fp = stdin;
+ 
     fp = fopen("pagerankList.txt", "w");
     if(fp == NULL) {
         perror("Error: ");
     }
+    
     
     for (List curr = pageRankList; curr != NULL; curr = curr->next) {
         fprintf(fp, "%s, %d, %.7f\n", curr->url, curr->nOut, curr->rank);
@@ -51,16 +54,13 @@ int main(int argc, const char * argv[]) {
 
 List getPageRankList(Graph g, double d, double diffPR, int maxIterations) {
    
-    
-    //double damp = (((double)1-d)/(double)g->nV) + d; //calc only one because constant
-    
     for(int page = 0; page < g->nV; page++) {
         g->ranks[page] = (double)1/(double)g->nV;
     }
     
     int iteration = 0;
     double diff = diffPR;
-    while(iteration < maxIterations && diff >= diffPR) {
+    while(iteration < maxIterations && !(diff < diffPR)) {
        
         /*
         printf("Iteration %d\n", iteration);
@@ -93,7 +93,6 @@ void calculatePageRanks(Graph g, double d) {
         double sum = 0;
         for(int v = 0; v < g->nV; v++) {
             if(inLL(g->edges[v], g->urls[w]) && v != w) {
-                //printf("%s -> %s\n", g->urls[v], g->urls[w]);
                 double Win = g->nInLinks[w]/g->sumNeighboursInLinks[v];
                 double Wout = g->nOutLinks[w]/g->sumNeighboursOutLinks[v];
                 sum += g->ranks[v] * Win * Wout;

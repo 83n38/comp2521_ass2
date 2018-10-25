@@ -7,6 +7,7 @@
 //
 
 #include "searchPagerank.h"
+
 /*
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -44,6 +45,8 @@ int main(int argc, const char * argv[]) {
         free(searchTerms[i]);
     }
     free(searchTerms);
+    
+    //NEED TO CHANGE OUTPUT TO MATCH REQUIRED OUTPUT
     for (List curr = matched_Url_list; curr != NULL; curr = curr->next) {
         printf("%s: nMatch %d  rank %lf\n", curr->url, curr->matchCount, curr->rank);
     }
@@ -58,7 +61,7 @@ List findMatchedUrls(char *searchTerms[], int nTerms) {
 
     // open invertedIndex.txt
     FILE* fp;
-    fp = fopen("invertedIndex.txt", "r");
+    fp = fopen("invertedIndex.txt", "r"); // need to remember to close the file
     if (fp == NULL) {
         printf("File not found");
         return 0;

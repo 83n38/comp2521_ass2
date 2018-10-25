@@ -12,7 +12,7 @@
 
 /*
  
- *****  MAIN IS NOW IN searchPagerank.c  *****
+ //*****  MAIN IS NOW IN searchPagerank.c  *****
  
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -25,5 +25,5 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-
 */
+
