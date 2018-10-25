@@ -420,30 +420,7 @@ void freeNxN(void **a, int n) {
     }
     free(a);
 }
-/*
-// unused for submission
-void printNxN(double **a, int n) {
-    if (n == 0) return;
-    for (int i = 0; i < n; i++) {
-        int j = 0;
-        for (; j < n - 1; j++) {
-            printf("%lf\t", a[i][j]);
-        }
-        printf("%lf\n", a[i][j]);
-    }
-}
 
-void intPrintNxN(int **a, int n) {
-    if (n == 0) return;
-    for (int i = 0; i < n; i++) {
-        int j = 0;
-        for (; j < n - 1; j++) {
-            printf("%d\t", a[i][j]);
-        }
-        printf("%d\n", a[i][j]);
-    }
-}
-*/
 // fills in the set from an array of file pointers to the input rankings
 Set getC(Set C, FILE **rankings) {
     // init the cardinality count

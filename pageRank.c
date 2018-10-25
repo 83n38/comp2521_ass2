@@ -6,12 +6,12 @@
 //  Copyright © 2018 Riley Vozzo. All rights reserved.
 //
 
-#include "pageRank.h"
+#include "pagerank.h"
 
 
 int compareRanks(Node *a, Node *b);
-/*
 
+/*
 int main(int argc, const char * argv[]) {
  
     if (argc != 4) {
