@@ -36,7 +36,8 @@ int main(int argc, const char * argv[]) {
     for (int i = 1; i <= n; i++) {
         rankings[i-1] = fopen(argv[i], "r");
         if (rankings[i-1] == NULL) {
-            //printf("%s was not found\n", argv[i]);
+            printf("%s was not found\n", argv[i]);
+            return 0;
         } else {
             //printf("%s was succesfully found\n", argv[i]);
         }
