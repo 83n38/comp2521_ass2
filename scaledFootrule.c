@@ -16,8 +16,6 @@ static int rankAssigned(int **assignArray, int j, int n);
 int getNextRow(double **cost, int **assignArray, int *checked, int n);
 static double findMin(double **cost, int n, int *mI, int *mJ);
 static void freeNxN(void **a, int n);
-static void printNxN(double **a, int n);
-void intPrintNxN(int **a, int n);
 static void trim(char *str);
 
 
@@ -416,28 +414,6 @@ void freeNxN(void **a, int n) {
         free(a[i]);
     }
     free(a);
-}
-
-void printNxN(double **a, int n) {
-    if (n == 0) return;
-    for (int i = 0; i < n; i++) {
-        int j = 0;
-        for (; j < n - 1; j++) {
-            printf("%lf\t", a[i][j]);
-        }
-        printf("%lf\n", a[i][j]);
-    }
-}
-
-void intPrintNxN(int **a, int n) {
-    if (n == 0) return;
-    for (int i = 0; i < n; i++) {
-        int j = 0;
-        for (; j < n - 1; j++) {
-            printf("%d\t", a[i][j]);
-        }
-        printf("%d\n", a[i][j]);
-    }
 }
 
 // fills in the set from an array of file pointers to the input rankings
