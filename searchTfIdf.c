@@ -10,13 +10,14 @@
 
 int main(int argc, char * argv[]) {
     
-    List L = getCollection();
-    IList IL = getInvertedList(L);
-    
     if (argc == 1) {
         printf("Usage: ./%s <search term> <search term>...", argv[0]);
         return 0;
     }
+    
+    List L = getCollection();
+    IList IL = getInvertedList(L);
+    
     int nTerms = argc - 1;
     char **searchTerms = malloc(nTerms * sizeof(char*));
     for (int i = 1; i <= nTerms; i++) {        
@@ -45,7 +46,6 @@ int main(int argc, char * argv[]) {
     
     return 0;
 }
-
 
 
 /* Returns an LL of urls which match with the search terms,

@@ -17,8 +17,9 @@ int main(int argc, const char * argv[]) {
     if (fp == NULL) {
         perror("Error: ");
     }
-    
     outputIL(IL, fp);
+    
+    fclose(fp);
     
     freeIList(IL);
     freeLL(L);

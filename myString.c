@@ -15,7 +15,7 @@ char *mystrdup2(char *src) {
     while (src[len])
         len++;
     
-    str = calloc(len + 1, sizeof(char));
+    str = calloc(len + 10, sizeof(char));
     p = str;
     while (*src)
         *p++ = *src++;

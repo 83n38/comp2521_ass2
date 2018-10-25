@@ -10,8 +10,8 @@
 
 
 int compareRanks(Node *a, Node *b);
-
 /*
+
 int main(int argc, const char * argv[]) {
  
     if (argc != 4) {
