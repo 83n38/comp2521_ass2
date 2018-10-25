@@ -447,7 +447,7 @@ void intPrintNxN(int **a, int n) {
 // fills in the set from an array of file pointers to the input rankings
 Set getC(Set C, FILE **rankings) {
     // init the cardinality count
-    C->sizeInputRanks = calloc(C->nRanks, sizeof(int));
+    C->sizeInputRanks = calloc(C->nRanks + 1, sizeof(int));
     
     // loop through the rankings array
     for (int i = 0; i < C->nRanks; i++) {
@@ -479,7 +479,7 @@ Set getC(Set C, FILE **rankings) {
     }
     // once we know the size of C
     // create an array of urls for easy indexing
-    C->array = malloc(C->size * sizeof(Url));
+    C->array = malloc((C->size +1) * sizeof(Url));
     Url u = C->head;
     int i = 0;
     while (u != NULL) {
