@@ -26,8 +26,6 @@ int main(int argc, const char * argv[]) {
     Graph g = getGraph(L);
 
     List pageRankList = getPageRankList(g, d, diffPR, maxIterations);
-    int (*compareRanksPtr)(Node *, Node *);
-    compareRanksPtr = &compareRanks;
     bubbleSort(pageRankList, &compareRanks);
     
     FILE *fp;

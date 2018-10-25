@@ -8,8 +8,6 @@
 #include "invertedIndex.h"
 #include "list.h"
 
-#define RANDOM_ROOT_INSERT (random() % 10 < 4)   // 40% chance
-
 #define word(IList)  ((IList)->word)
 #define left(IList)  ((IList)->left)
 #define right(IList)  ((IList)->right)
@@ -152,27 +150,6 @@ IList rotateLeft(IList n2) {
     return n1;
 }
 
-IList insertAtRoot(IList t, Word word) {
-    if (t == NULL) {
-        t = newNode(word);
-    } else if (strcmp(word, word(t)) < 0) {
-        left(t) = insertAtRoot(left(t), word);
-        t = rotateRight(t);
-    } else if (strcmp(word, word(t)) > 0) {
-        right(t) = insertAtRoot(right(t), word);
-        t = rotateLeft(t);
-    }
-    return t;
-}
-
-IList insertRandom(IList t, Word word) {
-    if (t == NULL)
-        t = newNode(word);
-    if (RANDOM_ROOT_INSERT)
-        return insertAtRoot(t, word);
-    else
-        return IListInsert(t, word);
-}
 
 IList insertAVL(IList t, Word word) {
     if (t == NULL)
