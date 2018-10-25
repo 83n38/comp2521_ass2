@@ -17,6 +17,7 @@ int getNextRow(double **cost, int **assignArray, int *checked, int n);
 static double findMin(double **cost, int n, int *mI, int *mJ);
 static void freeNxN(void **a, int n);
 static void printNxN(double **a, int n);
+void freeSet(Set s);
 void intPrintNxN(int **a, int n);
 static void trim(char *str);
 
@@ -93,6 +94,8 @@ int main(int argc, const char * argv[]) {
     // free cost since we don't need it anymore
     freeNxN((void **) cost, n);
     freeNxN((void **) assignArray, n);
+    
+    freeSet(C);
     
 }
 
@@ -417,7 +420,8 @@ void freeNxN(void **a, int n) {
     }
     free(a);
 }
-
+/*
+// unused for submission
 void printNxN(double **a, int n) {
     if (n == 0) return;
     for (int i = 0; i < n; i++) {
@@ -439,7 +443,7 @@ void intPrintNxN(int **a, int n) {
         printf("%d\n", a[i][j]);
     }
 }
-
+*/
 // fills in the set from an array of file pointers to the input rankings
 Set getC(Set C, FILE **rankings) {
     // init the cardinality count
@@ -525,6 +529,19 @@ Url inSet(Set C, char* u) {
         }
     }
     return NULL;
+}
+
+void freeSet(Set s) {
+    // free all the urls
+    for (int i = 0; i < s->size; i++) {
+        free(s->array[i]->name);
+        free(s->array[i]->ranks);
+        free(s->array[i]);
+    }
+    // free the arrays
+    free(s->array);
+    free(s->sizeInputRanks);
+    free(s);
 }
 
 /* remove leading/trailing spaces from a string, as well as
