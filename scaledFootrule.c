@@ -16,9 +16,6 @@ static int rankAssigned(int **assignArray, int j, int n);
 int getNextRow(double **cost, int **assignArray, int *checked, int n);
 static double findMin(double **cost, int n, int *mI, int *mJ);
 static void freeNxN(void **a, int n);
-//static void printNxN(double **a, int n);
-//void freeSet(Set s);
-//void intPrintNxN(int **a, int n);
 static void trim(char *str);
 
 
@@ -55,13 +52,13 @@ int main(int argc, const char * argv[]) {
     // now generate all the weights
     // malloc nxn array
     n = C->size;
-    double **cost = malloc(n*sizeof(double*));
-    double **costClean = malloc(n*sizeof(double*));
+    double **cost = malloc(n*sizeof(double*) + 10);
+    double **costClean = malloc(n*sizeof(double*) + 10);
     // a testing example
     //double ex1[10][10] = {{0,  0,  0,  0,  55,  96,  81,  30,  72,  82}, {79,  69,  8 ,  48,  83,  49,  33,  67,  12,  90}, {6 ,  85,  96,  22,  51,  43,  72,  53,  17,  11}, {4 ,  29,  53,  15,  83,  11,  3 ,  95,  6 ,  49}, {50,  11,  9 ,  29,  50,  4 ,  71,  49,  42,  61}, {26,  58,  83,  47,  62,  80,  35,  87,  89,  73}, {30,  51,  99,  93,  92,  91,  56,  31,  11,  50}, {95,  55,  52,  74,  59,  20,  44,  48,  44,  84}, {66,  73,  65,  21,  3 ,  1 ,  99,  17,  82,  60}, {39,  73,  58,  5 ,  65,  50,  46,  84,  23,  2}};
     for (int i = 0; i < C->size; i++) {
-        cost[i] = malloc(C->size*sizeof(double));
-        costClean[i] = malloc(C->size*sizeof(double));
+        cost[i] = malloc(C->size*sizeof(double) + 10);
+        costClean[i] = malloc(C->size*sizeof(double) + 10);
         assert(cost[i] != NULL && costClean[i] != NULL);
         for (int j = 0; j < C->size; j++) {
             // now calculate W(C->array[i], j)
@@ -148,11 +145,11 @@ int **hungarianAlgorithm(double **cost, int n) {
             goStep2 = 1;
         }
     }
-    int **assignArray = malloc(n*sizeof(int*));
+    int **assignArray = malloc(n*sizeof(int*) + 10);
     assert(assignArray != NULL);
 
     for (int i = 0; i < n; i++) {
-        assignArray[i] = malloc(n*sizeof(int));
+        assignArray[i] = malloc(n*sizeof(int) + 10);
         assert(assignArray[i] != NULL);
         for (int j = 0; j < n; j++) {
             assignArray[i][j] = 0;
@@ -456,7 +453,7 @@ Set getC(Set C, FILE **rankings) {
     }
     // once we know the size of C
     // create an array of urls for easy indexing
-    C->array = malloc((C->size +1) * sizeof(Url));
+    C->array = malloc((C->size +1) * sizeof(Url) + 10);
     Url u = C->head;
     int i = 0;
     while (u != NULL) {
@@ -470,7 +467,7 @@ Set getC(Set C, FILE **rankings) {
 // ***** Methods for the dodgy set ******
 
 Set newSet(int n) {
-    Set s = malloc(sizeof(Set) + 1);
+    Set s = malloc(sizeof(Set) + 10);
     s->head = NULL;
     s->size = 0;
     s->nRanks = n;
@@ -482,9 +479,9 @@ Set addToSet(Set C, char* u, int rank) {
     // hold the current head temporarily
     Url h = C->head;
     // add the new url to the beginning of the linked list
-    C->head = malloc(sizeof(url));
+    C->head = malloc(sizeof(url) + 10);
     // init all the fields
-    C->head->name = malloc((strlen(u) + 1)*sizeof(char*));
+    C->head->name = malloc((strlen(u) + 1)*sizeof(char*) + 10);
     strcpy(C->head->name, u);
     C->head->ranks = calloc(C->nRanks + 1, sizeof(int));
     C->head->ranksSize = 1;
