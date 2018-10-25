@@ -6,11 +6,11 @@
 //  Copyright © 2018 Riley Vozzo. All rights reserved.
 //
 
-#include "pageRank.h"
+#include "pagerank.h"
 
 
 int compareRanks(Node *a, Node *b);
-/*
+
 
 int main(int argc, const char * argv[]) {
  
@@ -45,7 +45,7 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-*/
+
 
 /* Gets a graph and returns a LL of urls with their page ranks*/
 List getPageRankList(Graph g, double d, double diffPR, int maxIterations) {

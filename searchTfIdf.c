@@ -7,7 +7,7 @@
 //
 
 #include "searchTfIdf.h"
-/*
+
 int main(int argc, char * argv[]) {
     
     if (argc == 1) {
@@ -46,7 +46,7 @@ int main(int argc, char * argv[]) {
     
     return 0;
 }
-*/
+
 
 /* Returns an LL of urls which match with the search terms,
    along with their tf_idf */
