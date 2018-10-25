@@ -13,6 +13,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
+#include <ctype.h>
+
+#define EPSILON 0.00001
 
 typedef struct url *Url;
 typedef struct set *Set;
@@ -20,6 +24,7 @@ typedef struct set *Set;
 typedef struct url {
     char *name;     // a url has a name - "url23"
     int *ranks;     // and a array of ranks - ranks[0] would be the ranking in the first ranks file
+    int ranksSize;  // size of the ranks array
     Set p;          // parent set
     Url next;       // pointer to another url
 } url;
@@ -27,7 +32,7 @@ typedef struct url {
 // dodgy implentation of a set
 typedef struct set {
     int size;               // number of items in the set
-    int *sizeInputRanks;     // array of the size of each input rank (same order as the ranks array in each url)
+    int *sizeInputRanks;    // array of the size of each input rank (same order as the ranks array in each url)
     int nRanks;             // number of input ranks
     Url head;               // first url in linked list
     Url *array;             // array of the urls in the set
