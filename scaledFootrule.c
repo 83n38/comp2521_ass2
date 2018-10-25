@@ -17,7 +17,7 @@ int getNextRow(double **cost, int **assignArray, int *checked, int n);
 static double findMin(double **cost, int n, int *mI, int *mJ);
 static void freeNxN(void **a, int n);
 //static void printNxN(double **a, int n);
-void freeSet(Set s);
+//void freeSet(Set s);
 //void intPrintNxN(int **a, int n);
 static void trim(char *str);
 
@@ -95,7 +95,7 @@ int main(int argc, const char * argv[]) {
     freeNxN((void **) cost, n);
     freeNxN((void **) assignArray, n);
     
-    freeSet(C);
+    //freeSet(C);
     
 }
 
@@ -531,7 +531,7 @@ Url inSet(Set C, char* u) {
     return NULL;
 }
 
-void freeSet(Set s) {
+/*void freeSet(Set s) {
     // free all the urls
     for (int i = 0; i < s->size; i++) {
         free(s->array[i]->name);
@@ -542,7 +542,7 @@ void freeSet(Set s) {
     free(s->array);
     free(s->sizeInputRanks);
     free(s);
-}
+}*/
 
 /* remove leading/trailing spaces from a string, as well as
  '.' (dot), ',' (comma), ';' (semicolon), ? (question mark)
