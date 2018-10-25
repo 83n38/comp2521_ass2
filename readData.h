@@ -13,6 +13,7 @@
 #include "invertedIndex.h"
 #include "list.h"
 #include "graph.h"
+#include "myString.h"
 
 
 List getCollection(void);

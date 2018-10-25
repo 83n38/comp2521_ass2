@@ -33,12 +33,12 @@ Graph newGraph(List L) {
     g->ranks = malloc(nV * sizeof(double));
     assert(g->ranks != NULL);
     g->newRanks = malloc(nV * sizeof(double));
-    assert(g->ranks != NULL);
+    assert(g->newRanks != NULL);
     // allocate memory for Nin/outLinks
     g->nInLinks = malloc(nV * sizeof(double));
     assert(g->nInLinks != NULL);
     g->nOutLinks = malloc(nV * sizeof(double));
-    assert(g->nInLinks != NULL);
+    assert(g->nOutLinks != NULL);
     //allocate memory for sumNeighboursIn/OutLinks
     g->sumNeighboursInLinks = malloc(nV * sizeof(double));
     assert(g->sumNeighboursInLinks != NULL);
@@ -47,7 +47,7 @@ Graph newGraph(List L) {
 
     List curr = L;
     for (i = 0; i < nV; i++) {
-        g->urls[i] = strdup(curr->url);
+        g->urls[i] = mystrdup2(curr->url);
         g->edges[i] = NULL;
         g->ranks[i] = 0;
         g->nInLinks[i] = g->nOutLinks[i] = 0;
@@ -79,26 +79,6 @@ void insertEdge(Graph g, char *src, char *dest) {
     }
 }
 
-/* I don't think we will need these for this assignment
-
-void removeEdge(Graph g, Edge e) {
-    assert(g != NULL && validV(g,e.v) && validV(g,e.w));
-    
-    if (inLL(g->edges[e.v], e.w)) {   // edge e in graph
-        g->edges[e.v] = deleteLL(g->edges[e.v], e.w);
-        g->edges[e.w] = deleteLL(g->edges[e.w], e.v);
-        g->nE--;
-    }
-}
- 
-bool adjacent(Graph g, Vertex v, Vertex w) {
-    assert(g != NULL && validV(g,v));
-    
-    return inLL(g->edges[v], w);
-}
- 
-*/
- 
 void showGraph(Graph g) {
     assert(g != NULL);
     int i;
@@ -133,6 +113,13 @@ void freeGraph(Graph g) {
         free(g->urls[i]);
     }
     free(g->urls);
+    free(g->edges);
+    free(g->ranks);
+    free(g->newRanks);
+    free(g->nInLinks);
+    free(g->nOutLinks);
+    free(g->sumNeighboursInLinks);
+    free(g->sumNeighboursOutLinks);    
     free(g);
 }
 
@@ -147,7 +134,6 @@ void adjustNLinks(Graph g) {
 
 /* Calculates the sum of the incoming/outgoing links of the neighbors
  of a vertex */
-
 void sumNeighborLinks(Graph g) {
     
     for(int v = 0; v < g->nV; v++) {
@@ -159,46 +145,3 @@ void sumNeighborLinks(Graph g) {
     }
 }
 
-
-
-/* Below are functions I don't need anymore but am keeping
-   just in case
-
-void calculateWeights(Graph g) {
-    
-    adjustNLinks(g); //prevents division by zero errors
-    
-    for (int v = 0; v < g->nV; v++) {
-        int sumIn = sumNeighborInLinks(g, g->edges[v]);
-        int sumOut = sumNeighborOutLinks(g, g->edges[v]);
-        List currEdge = g->edges[v];
-        while (currEdge != NULL) {
-            
-            int w = vertexID(currEdge->url, g->urls, g->nV);
-            currEdge->Win = g->nInLinks[w]/sumIn;
-            currEdge->Wout = g->nOutLinks[w]/sumOut;
-            
-            currEdge = currEdge->next;
-        }
-    }
-}
-
-static int sumNeighborInLinks(Graph g, List Edges) {
-    int sum = 0;
-    for (List curr = Edges; curr != NULL; curr = curr->next) {
-        int w = vertexID(curr->url, g->urls, g->nV);
-        sum += g->nInLinks[w];
-    }
-    return sum;
-}
-
-static int sumNeighborOutLinks(Graph g, List Edges) {
-    int sum = 0;
-    for (List curr = Edges; curr != NULL; curr = curr->next) {
-        int w = vertexID(curr->url, g->urls, g->nV);
-        sum += g->nOutLinks[w];
-    }
-    return sum;
-}
-
- */
